@@ -431,7 +431,65 @@
   .grat-history-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:5px; }
   .grat-history-list li{ font-size:13.5px; display:flex; gap:8px; }
   .grat-history-list li::before{ content:"·"; color:var(--amber-deep); font-weight:700; }
+// --- Affirmations dropdown ---
+var AFFIRMATIONS = [
+  "I accept myself as I am.",
+  "I am a capable person.",
+  "I am a good and caring person.",
+  "I am doing the best that I can.",
+  "I am good enough.",
+  "I am valuable because I am human, alive and unique.",
+  "I can be anxious and still deal with this situation.",
+  "I can do my coping strategies and allow this to pass.",
+  "I can handle my feelings and sensations.",
+  "I can handle these symptoms or sensations.",
+  "I can make a difference in the world.",
+  "I can relax and let go of tension.",
+  "I can take all the time I need in order to let go and relax.",
+  "I deserve to feel O.K. right now.",
+  "I don't need these thoughts — I can choose to think differently.",
+  "I have confidence in myself.",
+  "I've survived this before and I'll survive this time, too.",
+  "There's no need to push myself. I can take as small a step forward as I choose.",
+  "These are just thoughts — not reality.",
+  "This anxiety won't hurt me — even if it doesn't feel good.",
+  "This feeling isn't comfortable or pleasant, but I can accept it.",
+  "This is an opportunity for me to learn to cope with my fears.",
+  "This isn't an emergency. It's O.K. to think slowly about what I need to do.",
+  "This isn't the worst thing that could happen."
+];
 
+var affirmSelect = el("select", {
+  style: { width: "100%", background: t.bgSoft, color: t.text, border: "1px solid " + t.border, borderRadius: "10px", padding: "10px", fontSize: "14px", boxSizing: "border-box" }
+});
+affirmSelect.appendChild(el("option", { value: "" }, ["Choose an affirmation..."]));
+AFFIRMATIONS.forEach(function(a, i) {
+  affirmSelect.appendChild(el("option", { value: String(i) }, [a]));
+});
+
+var affirmDisplay = el("div", {
+  style: { marginTop: "12px", fontFamily: t.display, fontSize: "15px", fontWeight: "700", color: t.text, textAlign: "center", minHeight: "44px", display: "flex", alignItems: "center", justifyContent: "center", lineHeight: "1.4" }
+}, ["Tap the dropdown or shuffle for one"]);
+
+affirmSelect.addEventListener("change", function() {
+  affirmDisplay.textContent = affirmSelect.value === "" ? "Tap the dropdown or shuffle for one" : AFFIRMATIONS[affirmSelect.value];
+});
+
+var randomAffirmBtn = el("button", {
+  onclick: function() {
+    var i = Math.floor(Math.random() * AFFIRMATIONS.length);
+    affirmSelect.value = String(i);
+    affirmDisplay.textContent = AFFIRMATIONS[i];
+  },
+  style: { marginTop: "10px", width: "100%", background: t.cardAlt, color: t.text, border: "1px solid " + t.border, borderRadius: "10px", padding: "10px 14px", fontSize: "13px", fontWeight: "700", cursor: "pointer" }
+}, ["\uD83C\uDFB2  Shuffle Affirmation"]);
+
+wrap.appendChild(card(t, [
+  sectionLabel(t, "Affirmation"),
+  affirmSelect,
+  affirmDisplay,
+  randomAffirmBtn
+], { marginBottom: "20px", background: t.cardAlt }));
   /* ---------- Quiet Games ---------- */
   .bubble-grid{
     display:grid; grid-template-columns:repeat(7, 1fr); gap:7px;
