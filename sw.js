@@ -1,16 +1,23 @@
 // Groundwork service worker
 // Bump CACHE_NAME's version any time you deploy changes to force clients to refresh.
-const CACHE_NAME = 'groundwork-cache-v1';
+const CACHE_NAME = 'groundwork-cache-v2';
 
 const PRECACHE_URLS = [
   './',
   './index.html',
   './manifest.json',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
-  './icons/icon-maskable-192.png',
-  './icons/icon-maskable-512.png',
-  './icons/apple-touch-icon.png',
+  './favicon-16.png',
+  './favicon-32.png',
+  './favicon-48.png',
+  './apple-touch-icon.png',
+  './apple-touch-icon-120.png',
+  './apple-touch-icon-152.png',
+  './apple-touch-icon-167.png',
+  './icon-192.png',
+  './icon-512.png',
+  './icon-maskable-192.png',
+  './icon-maskable-512.png',
+  './mstile-150.png',
 ];
 
 self.addEventListener('install', (event) => {
