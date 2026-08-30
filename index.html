@@ -919,7 +919,6 @@
     <a class="jump-chip" href="#calmBreathe">Breathe</a>
     <a class="jump-chip" href="#calmGround">Ground</a>
     <a class="jump-chip" href="#calmWave">Ride the wave</a>
-    <a class="jump-chip" href="#calmSkills">Skills</a>
     <a class="jump-chip" href="#calmGames">Games</a>
     <a class="jump-chip" href="#calmSounds">Sounds</a>
   </div>
@@ -974,9 +973,6 @@
       <button class="btn ghost" id="waveReset">Reset</button>
     </div>
   </div>
-
-  <div class="section-eyebrow" id="calmSkills">Coping skills</div>
-  <div id="accordion"></div>
 
   <div class="section-eyebrow" id="calmGames">Quiet games</div>
   <div class="segmented" id="gameSeg">
@@ -1082,9 +1078,22 @@
 
 </div><!-- /view-calm -->
 
-<div class="view" id="view-control">
-  <div class="section-eyebrow">Control</div>
+<div class="view" id="view-skills">
+  <div class="section-eyebrow">Skills</div>
+  <div class="jump-row">
+    <a class="jump-chip" href="#skillsCoping">Coping skills</a>
+    <a class="jump-chip" href="#skillsControl">What I can control</a>
+    <a class="jump-chip" href="#skillsRightNow">Right now</a>
+  </div>
 
+  <div class="section-eyebrow" id="skillsCoping">Coping skills</div>
+  <div class="card">
+    <h3><span class="dot moss"></span>Pick something to try</h3>
+    <p class="sub">Grouped ideas for physical, mental, social, and creative ways to cope. Tap to check one off.</p>
+  </div>
+  <div id="accordion"></div>
+
+  <div class="section-eyebrow" id="skillsControl">What I can control</div>
   <div class="card">
     <h3><span class="dot moss"></span>50 things I can control</h3>
     <p class="sub">What I need to focus on right now.</p>
@@ -1099,7 +1108,7 @@
     <div id="ctrlList"></div>
   </div>
 
-  <div class="section-eyebrow">Right now</div>
+  <div class="section-eyebrow" id="skillsRightNow">Right now</div>
   <div class="card">
     <h3><span class="dot clay"></span>How much control do I have?</h3>
     <p class="sub">Tap the number that fits this situation.</p>
@@ -1110,7 +1119,7 @@
     </div>
   </div>
 
-</div><!-- /view-control -->
+</div><!-- /view-skills -->
 
 <div class="view" id="view-journal">
   <div class="section-eyebrow">Journal</div>
@@ -1322,9 +1331,9 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12c4-3 8 3 12 0s6-2 6-2M3 17c4-3 8 3 12 0s6-2 6-2"/></svg>
     Calm
   </button>
-  <button class="navbtn" data-view="control">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.3"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg>
-    Control
+  <button class="navbtn" data-view="skills">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.3h6c0-1.1.4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg>
+    Skills
   </button>
   <button class="navbtn" data-view="journal">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
