@@ -1,0 +1,3155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Groundwork · Calm</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2B2118">
+
+<!-- Favicons (browser tabs, desktop bookmarks) -->
+<link rel="icon" type="image/png" href="favicon-16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="favicon-32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="favicon-48.png" sizes="48x48">
+<link rel="shortcut icon" href="favicon-32.png">
+
+<!-- iOS home screen -->
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="167x167" href="apple-touch-icon-167.png">
+<link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152.png">
+<link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Groundwork">
+
+<!-- Android / Chrome install -->
+<meta name="mobile-web-app-capable" content="yes">
+
+<!-- Windows tiles -->
+<meta name="msapplication-TileImage" content="mstile-150.png">
+<meta name="msapplication-TileColor" content="#2B2118">
+<meta name="msapplication-config" content="none">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-dark:#2B2118;
+    --soil-mid:#6B4F3A;
+    --soil-line:#8C6B4F;
+    --topsoil:#EDE6D6;
+    --topsoil-2:#E4DAC4;
+    --moss:#5C7A52;
+    --moss-deep:#43593B;
+    --clay:#B4703F;
+    --clay-deep:#8F5730;
+    --sky:#6F8FA6;
+    --sky-deep:#4F6E82;
+    --amber:#C08A34;
+    --amber-deep:#93641F;
+    --crisis:#8C3A3A;
+    --crisis-deep:#6E2C2C;
+    --paper:#FBF8F1;
+    --card-bg:#FFFFFF;
+    --line:rgba(43,33,24,0.12);
+    --shadow:0 2px 14px rgba(43,33,24,0.10);
+  }
+
+  html[data-theme="sage"]{
+    --soil-dark:#1F3327; --soil-mid:#4A6B54; --topsoil:#DCEBDD; --topsoil-2:#C9DFC9;
+    --moss:#2E7D5B; --moss-deep:#1F5A40; --clay:#6FA36B; --clay-deep:#4F7C4C;
+    --sky:#3E8E96; --sky-deep:#2C6970; --amber:#7F9B3E; --amber-deep:#5E7529;
+    --paper:#F2F8F2; --card-bg:#FFFFFF; --line:rgba(31,51,39,0.14); --shadow:0 2px 14px rgba(31,51,39,0.12);
+  }
+  html[data-theme="ocean"]{
+    --soil-dark:#152B36; --soil-mid:#3F6577; --topsoil:#DCEAF0; --topsoil-2:#C7DEE8;
+    --moss:#2C7A8C; --moss-deep:#1E5765; --clay:#5B93A8; --clay-deep:#3E6E80;
+    --sky:#2E6FA6; --sky-deep:#1F4F7A; --amber:#C98A3C; --amber-deep:#9C6524;
+    --paper:#F1F7FA; --card-bg:#FFFFFF; --line:rgba(21,43,54,0.13); --shadow:0 2px 14px rgba(21,43,54,0.12);
+  }
+  html[data-theme="dark"]{
+    --soil-dark:#F0E9DC; --soil-mid:#B7AA96; --topsoil:#2A2319; --topsoil-2:#332B20;
+    --moss:#6FA867; --moss-deep:#4F7F49; --clay:#D08F57; --clay-deep:#A8703F;
+    --sky:#7FA8C2; --sky-deep:#5A7F99; --amber:#D9AF5A; --amber-deep:#A87F35;
+    --paper:#161310; --card-bg:#221D18; --line:rgba(240,233,220,0.14); --shadow:0 2px 14px rgba(0,0,0,0.45);
+  }
+  html[data-theme="vivid"]{
+    --soil-dark:#1A1A1A; --soil-mid:#6B6B6B; --topsoil:#F0F0F0; --topsoil-2:#E4E4E4;
+    --moss:#1FA35C; --moss-deep:#0F7A42; --clay:#FF6B3D; --clay-deep:#E0501F;
+    --sky:#2E8FE0; --sky-deep:#1A6BB8; --amber:#F5B400; --amber-deep:#C98F00;
+    --paper:#FFFFFF; --card-bg:#FFFFFF; --line:rgba(0,0,0,0.10); --shadow:0 2px 14px rgba(0,0,0,0.12);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--soil-dark);
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:84px;
+    padding-top:44px;
+    min-height:100vh;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+
+  /* ---------- Crisis bar ---------- */
+  .crisis-bar{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:var(--crisis-deep);
+    padding:8px 14px;
+    display:flex; align-items:center; gap:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.18);
+  }
+  .crisis-text{
+    flex:1; color:#F6E9E4; font-size:12.5px; font-weight:600; line-height:1.25;
+  }
+  .crisis-actions{ display:flex; gap:6px; flex:0 0 auto; }
+  .crisis-btn{
+    display:flex; align-items:center; gap:5px;
+    background:rgba(255,255,255,0.16);
+    color:#fff; border:1px solid rgba(255,255,255,0.35);
+    border-radius:20px; padding:6px 12px;
+    font-size:12px; font-weight:700; text-decoration:none;
+    white-space:nowrap;
+  }
+  .crisis-btn svg{ width:13px; height:13px; flex:0 0 auto; }
+  .crisis-btn:active{ background:rgba(255,255,255,0.28); }
+
+  /* ---------- Header / strata banner ---------- */
+  header.strata{
+    position:relative;
+    padding:34px 20px 26px;
+    overflow:hidden;
+    background:
+      linear-gradient(180deg, var(--topsoil) 0%, var(--topsoil) 38%, var(--soil-mid) 38%, var(--soil-mid) 68%, var(--soil-dark) 68%, var(--soil-dark) 100%);
+  }
+  header.strata::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 26px);
+    pointer-events:none;
+  }
+  .strata-label{
+    position:absolute;
+    right:16px;
+    font-size:9px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:#fff;
+    mix-blend-mode:difference;
+  }
+  .strata-label.top{ top:6px; }
+  .strata-label.mid{ top:78px; }
+  .strata-label.bed{ bottom:8px; }
+
+  .brand-row{ position:relative; z-index:2; display:flex; align-items:center; gap:12px; }
+  .mark{
+    width:40px;height:40px; flex:0 0 auto;
+  }
+  .wordmark{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:26px;
+    letter-spacing:-0.01em;
+    color:#fff;
+    mix-blend-mode:difference;
+  }
+  .tagline{
+    position:relative; z-index:2;
+    margin-top:6px;
+    font-size:13.5px;
+    color:#fff;
+    mix-blend-mode:difference;
+    font-style:italic;
+    font-family:'Fraunces',serif;
+  }
+
+  /* ---------- Layout ---------- */
+  main{ padding:20px 16px 8px; max-width:520px; margin:0 auto; }
+  .section-eyebrow{
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--soil-mid);
+    margin:26px 2px 10px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .section-eyebrow::after{
+    content:""; flex:1; height:1px; background:var(--line);
+  }
+
+  .card{
+    background:var(--card-bg);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:18px 18px 20px;
+    margin-bottom:14px;
+    box-shadow:var(--shadow);
+  }
+  .card h3{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:19px;
+    margin:0 0 4px;
+    display:flex; align-items:center; gap:9px;
+  }
+  .card .sub{
+    font-size:13.5px;
+    color:var(--soil-mid);
+    margin:0 0 14px;
+    line-height:1.4;
+  }
+  .dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto;}
+  .dot.sky{background:var(--sky);}
+  .dot.moss{background:var(--moss);}
+  .dot.clay{background:var(--clay);}
+  .dot.amber{background:var(--amber);}
+
+  button{ font-family:inherit; cursor:pointer; }
+  .btn{
+    border:none; border-radius:11px;
+    padding:11px 18px;
+    font-weight:600; font-size:14.5px;
+    color:#fff;
+    transition:transform .12s ease, opacity .12s ease;
+  }
+  .btn:active{ transform:scale(.96); }
+  .btn.sky{ background:var(--sky-deep); }
+  .btn.moss{ background:var(--moss-deep); }
+  .btn.clay{ background:var(--clay-deep); }
+  .btn.amber{ background:var(--amber-deep); }
+  .btn.ghost{
+    background:transparent; color:var(--soil-mid);
+    border:1px solid var(--line); font-weight:500;
+  }
+
+  /* ---------- Box breathing ---------- */
+  .breath-wrap{ display:flex; flex-direction:column; align-items:center; padding:10px 0 4px; }
+  .breath-ring{
+    width:168px;height:168px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #cfe0e9, var(--sky));
+    display:flex; align-items:center; justify-content:center;
+    transform:scale(0.62);
+    transition:transform 4s cubic-bezier(.45,0,.55,1);
+    box-shadow:0 8px 24px rgba(111,143,166,0.35);
+  }
+  .breath-core{
+    width:70%; height:70%; border-radius:50%;
+    background:rgba(255,255,255,0.35);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+  }
+  .breath-phase{ font-family:'Fraunces',serif; font-weight:600; font-size:17px; color:#1d3a49; }
+  .breath-count{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:#2c4c5c; margin-top:2px; }
+  .breath-meta{ display:flex; gap:18px; margin-top:16px; font-size:12.5px; color:var(--soil-mid); }
+  .breath-meta b{ color:var(--soil-dark); font-family:'IBM Plex Mono',monospace; }
+  .breath-controls{ margin-top:16px; display:flex; gap:10px; }
+
+  /* ---------- Grounding ---------- */
+  .ground-step{ margin-bottom:18px; }
+  .ground-step-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:8px; }
+  .ground-step-title{ font-size:14px; font-weight:600; }
+  .ground-step-count{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--soil-mid); }
+  .input-row{ display:flex; flex-direction:column; gap:7px; }
+  .ground-input-wrap{ display:flex; align-items:center; gap:8px; }
+  .ground-input-num{
+    width:20px; flex:0 0 auto; text-align:right;
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--soil-mid);
+  }
+  .ground-input{
+    flex:1; border:1.5px solid var(--line); border-radius:9px;
+    padding:9px 12px; font-family:'Inter',sans-serif; font-size:13.5px;
+    background:var(--topsoil-2); color:var(--soil-dark);
+    transition:all .15s ease;
+  }
+  .ground-input:focus{ outline:none; border-color:var(--moss); background:var(--card-bg); }
+  .ground-input.filled{ border-color:var(--moss-deep); background:var(--card-bg); }
+  .ground-progress-track{
+    height:6px; border-radius:4px; background:var(--topsoil-2); overflow:hidden; margin:16px 0 4px;
+  }
+  .ground-progress-fill{
+    height:100%; width:0%; background:var(--moss); transition:width .3s ease;
+  }
+  .ground-done-msg{
+    font-family:'Fraunces',serif; font-style:italic; color:var(--moss-deep); font-size:14px; margin-top:8px; display:none;
+  }
+
+  /* ---------- Wave / urge surfing ---------- */
+  .wave-timer{
+    font-family:'IBM Plex Mono',monospace; font-size:38px; text-align:center;
+    color:var(--clay-deep); margin:6px 0 2px;
+  }
+  .wave-prompt{
+    text-align:center; font-family:'Fraunces',serif; font-size:15.5px; font-style:italic;
+    color:var(--soil-dark); min-height:44px; display:flex; align-items:center; justify-content:center;
+    padding:0 8px;
+  }
+  .wave-bar{
+    height:8px; border-radius:4px; background:var(--topsoil-2); overflow:hidden; margin:14px 0;
+  }
+  .wave-bar-fill{ height:100%; width:0%; background:var(--clay); transition:width 1s linear; }
+  .wave-controls{ display:flex; gap:10px; justify-content:center; }
+  .wave-presets{ display:flex; gap:8px; justify-content:center; margin-bottom:14px; }
+  .preset-btn{
+    padding:7px 14px; border-radius:20px; border:1.5px solid var(--line);
+    background:var(--card-bg); font-size:13px; font-weight:600; color:var(--soil-mid);
+  }
+  .preset-btn.active{ background:var(--clay); border-color:var(--clay-deep); color:#fff; }
+
+  /* ---------- Coping skills accordion ---------- */
+  .acc-item{
+    border:1px solid var(--line); border-radius:14px; margin-bottom:10px; overflow:hidden; background:var(--card-bg);
+  }
+  .acc-head{
+    width:100%; display:flex; align-items:center; justify-content:space-between;
+    padding:14px 16px; background:none; border:none; text-align:left;
+  }
+  .acc-head-left{ display:flex; align-items:center; gap:10px; }
+  .acc-title{ font-weight:600; font-size:14.5px; }
+  .acc-count{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--soil-mid); }
+  .acc-chevron{ transition:transform .2s ease; color:var(--soil-mid); }
+  .acc-item.open .acc-chevron{ transform:rotate(180deg); }
+  .acc-body{
+    max-height:0; overflow:hidden; transition:max-height .3s ease;
+  }
+  .acc-item.open .acc-body{ max-height:600px; }
+  .acc-body-inner{ padding:0 16px 16px; }
+  .skill-chip{
+    display:flex; align-items:center; gap:10px;
+    padding:9px 10px; border-radius:9px; font-size:13.5px;
+    margin-bottom:6px; background:var(--topsoil-2);
+    color:var(--soil-dark);
+  }
+  .skill-chip .tick{
+    width:16px;height:16px;border-radius:5px;border:1.5px solid var(--soil-mid);
+    flex:0 0 auto; display:flex; align-items:center; justify-content:center;
+    transition:all .15s ease;
+  }
+  .skill-chip.checked{ background:var(--topsoil); }
+  .skill-chip.checked .tick{ background:var(--moss-deep); border-color:var(--moss-deep); }
+  .skill-chip.checked .tick::after{ content:"✓"; color:#fff; font-size:11px; }
+  .skill-chip.checked span:last-child{ text-decoration:line-through; opacity:.65; }
+
+  /* ---------- Bottom nav ---------- */
+  nav.bottom{
+    position:fixed; bottom:0; left:0; right:0;
+    background:var(--card-bg); border-top:1px solid var(--line);
+    display:flex; padding:8px 6px calc(8px + env(safe-area-inset-bottom));
+    z-index:10;
+  }
+  .navbtn{
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;
+    background:none; border:none; padding:6px 2px; color:#B7AC9A; font-size:10.5px; font-weight:600;
+  }
+  .navbtn.active{ color:var(--moss-deep); }
+  .navbtn svg{ width:20px; height:20px; }
+
+  /* ---------- Tab views ---------- */
+  .view{ display:none; }
+  .view.active{ display:block; }
+
+  /* ---------- Journal ---------- */
+  .segmented{
+    display:flex; background:var(--topsoil-2); border-radius:12px; padding:4px; margin-bottom:16px;
+  }
+  .segmented button{
+    flex:1; border:none; background:none; padding:10px 8px; border-radius:9px;
+    font-weight:600; font-size:13.5px; color:var(--soil-mid); transition:all .15s ease;
+  }
+  .segmented button.active{ background:var(--card-bg); color:var(--soil-dark); box-shadow:var(--shadow); }
+
+  .journal-date{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--soil-mid); letter-spacing:.06em; text-transform:uppercase; }
+  .journal-prompt{
+    font-family:'Fraunces',serif; font-style:italic; font-size:18px; line-height:1.4;
+    color:var(--soil-dark); margin:8px 0 16px;
+  }
+  .journal-textarea{
+    width:100%; min-height:140px; border:1.5px solid var(--line); border-radius:12px;
+    padding:13px 14px; font-family:'Inter',sans-serif; font-size:14.5px; line-height:1.5;
+    background:var(--topsoil-2); color:var(--soil-dark); resize:vertical;
+  }
+  .journal-textarea:focus{ outline:none; border-color:var(--moss); background:var(--card-bg); }
+  .journal-footer{ display:flex; align-items:center; justify-content:space-between; margin-top:12px; }
+  .journal-wordcount{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--soil-mid); }
+  .journal-saved-flash{
+    font-family:'Fraunces',serif; font-style:italic; font-size:13px; color:var(--moss-deep);
+    opacity:0; transition:opacity .25s ease;
+  }
+  .journal-saved-flash.show{ opacity:1; }
+  .prompt-shuffle{
+    display:flex; align-items:center; gap:6px; background:none; border:none;
+    color:var(--soil-mid); font-size:12px; font-weight:600; padding:0;
+  }
+
+  .entries-list{ margin-top:4px; }
+  .entry-item{
+    background:var(--card-bg); border:1px solid var(--line); border-radius:14px; padding:14px 16px; margin-bottom:10px;
+  }
+  .entry-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+  .entry-badge{
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.06em; text-transform:uppercase;
+    padding:3px 8px; border-radius:6px; color:#fff;
+  }
+  .entry-badge.prompted{ background:var(--sky-deep); }
+  .entry-badge.freestyle{ background:var(--clay-deep); }
+  .entry-time{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--soil-mid); }
+  .entry-prompt-ref{ font-family:'Fraunces',serif; font-style:italic; font-size:12.5px; color:var(--soil-mid); margin-bottom:4px; }
+  .entry-text{ font-size:13.5px; line-height:1.5; color:var(--soil-dark); white-space:pre-wrap; }
+  .entries-empty{ text-align:center; color:var(--soil-mid); font-size:13px; padding:18px 0; }
+
+  /* ---------- Gratitude ---------- */
+  .grat-row{ display:flex; flex-direction:column; gap:6px; margin-bottom:12px; }
+  .grat-input-wrap{ display:flex; align-items:center; gap:8px; }
+  .grat-num{
+    width:20px; flex:0 0 auto; text-align:right;
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--soil-mid);
+  }
+  .grat-input{
+    flex:1; border:1.5px solid var(--line); border-radius:9px;
+    padding:9px 12px; font-family:'Inter',sans-serif; font-size:13.5px;
+    background:var(--topsoil-2); color:var(--soil-dark);
+    transition:all .15s ease;
+  }
+  .grat-input:focus{ outline:none; border-color:var(--amber); background:var(--card-bg); }
+  .grat-input.filled{ border-color:var(--amber-deep); background:var(--card-bg); }
+  .grat-input.dup{ border-color:var(--clay-deep); background:#FBEFE6; }
+  .grat-dup-warning{
+    display:none; margin-left:28px; font-size:12px; font-family:'Fraunces',serif; font-style:italic;
+    color:var(--clay-deep);
+  }
+  .grat-dup-warning.show{ display:block; }
+  .grat-progress-track{
+    height:6px; border-radius:4px; background:var(--topsoil-2); overflow:hidden; margin:14px 0 4px;
+  }
+  .grat-progress-fill{ height:100%; width:0%; background:var(--amber); transition:width .3s ease; }
+  .grat-done-msg{
+    font-family:'Fraunces',serif; font-style:italic; color:var(--amber-deep); font-size:14px; margin-top:8px; display:none;
+  }
+  .grat-history-item{
+    background:var(--card-bg); border:1px solid var(--line); border-radius:14px; padding:14px 16px; margin-bottom:10px;
+  }
+  .grat-history-date{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--soil-mid); margin-bottom:8px; }
+  .grat-history-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:5px; }
+  .grat-history-list li{ font-size:13.5px; display:flex; gap:8px; }
+  .grat-history-list li::before{ content:"·"; color:var(--amber-deep); font-weight:700; }
+// --- Affirmations dropdown ---
+var AFFIRMATIONS = [
+  "I accept myself as I am.",
+  "I am a capable person.",
+  "I am a good and caring person.",
+  "I am doing the best that I can.",
+  "I am good enough.",
+  "I am valuable because I am human, alive and unique.",
+  "I can be anxious and still deal with this situation.",
+  "I can do my coping strategies and allow this to pass.",
+  "I can handle my feelings and sensations.",
+  "I can handle these symptoms or sensations.",
+  "I can make a difference in the world.",
+  "I can relax and let go of tension.",
+  "I can take all the time I need in order to let go and relax.",
+  "I deserve to feel O.K. right now.",
+  "I don't need these thoughts — I can choose to think differently.",
+  "I have confidence in myself.",
+  "I've survived this before and I'll survive this time, too.",
+  "There's no need to push myself. I can take as small a step forward as I choose.",
+  "These are just thoughts — not reality.",
+  "This anxiety won't hurt me — even if it doesn't feel good.",
+  "This feeling isn't comfortable or pleasant, but I can accept it.",
+  "This is an opportunity for me to learn to cope with my fears.",
+  "This isn't an emergency. It's O.K. to think slowly about what I need to do.",
+  "This isn't the worst thing that could happen."
+];
+
+var affirmSelect = el("select", {
+  style: { width: "100%", background: t.bgSoft, color: t.text, border: "1px solid " + t.border, borderRadius: "10px", padding: "10px", fontSize: "14px", boxSizing: "border-box" }
+});
+affirmSelect.appendChild(el("option", { value: "" }, ["Choose an affirmation..."]));
+AFFIRMATIONS.forEach(function(a, i) {
+  affirmSelect.appendChild(el("option", { value: String(i) }, [a]));
+});
+
+var affirmDisplay = el("div", {
+  style: { marginTop: "12px", fontFamily: t.display, fontSize: "15px", fontWeight: "700", color: t.text, textAlign: "center", minHeight: "44px", display: "flex", alignItems: "center", justifyContent: "center", lineHeight: "1.4" }
+}, ["Tap the dropdown or shuffle for one"]);
+
+affirmSelect.addEventListener("change", function() {
+  affirmDisplay.textContent = affirmSelect.value === "" ? "Tap the dropdown or shuffle for one" : AFFIRMATIONS[affirmSelect.value];
+});
+
+var randomAffirmBtn = el("button", {
+  onclick: function() {
+    var i = Math.floor(Math.random() * AFFIRMATIONS.length);
+    affirmSelect.value = String(i);
+    affirmDisplay.textContent = AFFIRMATIONS[i];
+  },
+  style: { marginTop: "10px", width: "100%", background: t.cardAlt, color: t.text, border: "1px solid " + t.border, borderRadius: "10px", padding: "10px 14px", fontSize: "13px", fontWeight: "700", cursor: "pointer" }
+}, ["\uD83C\uDFB2  Shuffle Affirmation"]);
+
+wrap.appendChild(card(t, [
+  sectionLabel(t, "Affirmation"),
+  affirmSelect,
+  affirmDisplay,
+  randomAffirmBtn
+], { marginBottom: "20px", background: t.cardAlt }));
+  /* ---------- Quiet Games ---------- */
+  .bubble-grid{
+    display:grid; grid-template-columns:repeat(7, 1fr); gap:7px;
+  }
+  .bubble{
+    aspect-ratio:1; border:none; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #dcecf1, var(--sky));
+    box-shadow:0 3px 6px rgba(111,143,166,0.35), inset 0 -3px 4px rgba(0,0,0,0.08);
+    transition:transform .08s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .bubble:active{ transform:scale(0.9); }
+  .bubble.popped{
+    background:var(--topsoil-2);
+    box-shadow:inset 0 2px 5px rgba(43,33,24,0.25);
+    transform:scale(0.86);
+  }
+
+  .sand-wrap{ position:relative; }
+  .sand-canvas{
+    width:100%; height:230px; border-radius:16px; display:block;
+    touch-action:none; box-shadow:var(--shadow);
+  }
+  .sand-hint{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-style:italic; font-size:13.5px; color:rgba(43,33,24,0.35);
+    pointer-events:none; transition:opacity .3s ease;
+  }
+
+  .match-grid{
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:8px;
+  }
+  .match-tile{
+    aspect-ratio:1; perspective:600px; border:none; background:none; padding:0;
+  }
+  .match-tile-inner{
+    position:relative; width:100%; height:100%; transition:transform .45s ease;
+    transform-style:preserve-3d;
+  }
+  .match-tile.flipped .match-tile-inner, .match-tile.matched .match-tile-inner{ transform:rotateY(180deg); }
+  .match-face{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    border-radius:12px; backface-visibility:hidden; font-size:22px;
+  }
+  .match-face.back{ background:var(--moss); color:#fff; font-family:'Fraunces',serif; font-size:16px; }
+  .match-face.front{ background:var(--card-bg); border:1.5px solid var(--line); transform:rotateY(180deg); }
+  .match-tile.matched .match-face.front{ background:var(--topsoil-2); border-color:var(--moss-deep); opacity:.75; }
+  .match-status{ text-align:center; margin-top:12px; font-size:12px; color:var(--soil-mid); }
+
+  .tapbeat-wrap{ display:flex; flex-direction:column; align-items:center; gap:16px; }
+  .tapbeat-rings{
+    position:relative; width:min(60vw, 220px); height:min(60vw, 220px);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .tapbeat-ring{
+    position:absolute; inset:0; border-radius:50%;
+    border:2px solid var(--line);
+    transform:scale(0.6); opacity:0;
+  }
+  .tapbeat-ring.pulse{ animation:tapbeatRingPulse var(--tapbeat-dur, 1s) ease-out; }
+  @keyframes tapbeatRingPulse{
+    0%{ transform:scale(0.55); opacity:0.9; }
+    100%{ transform:scale(1.15); opacity:0; }
+  }
+  .tapbeat-core{
+    position:relative; width:55%; height:55%; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, var(--amber), var(--amber-deep));
+    box-shadow:0 3px 14px rgba(147,100,31,0.35);
+    transition:transform .18s cubic-bezier(0.34,1.56,0.64,1), box-shadow .18s ease-out;
+    z-index:2;
+  }
+  .tapbeat-core.breathe{ animation:tapbeatBreathe var(--tapbeat-dur, 1s) ease-in-out infinite; }
+  @keyframes tapbeatBreathe{
+    0%,100%{ transform:scale(1); }
+    50%{ transform:scale(1.08); }
+  }
+  .tapbeat-core.tapped{
+    transform:scale(0.88) !important;
+    box-shadow:0 0 22px 6px rgba(200,138,52,0.5) !important;
+  }
+  .tapbeat-ripple{
+    position:absolute; border-radius:50%; border:2px solid var(--amber);
+    pointer-events:none; transform:translate(-50%,-50%) scale(0.3);
+    opacity:0.9; animation:tapbeatRippleOut .6s ease-out forwards;
+  }
+  @keyframes tapbeatRippleOut{
+    to{ transform:translate(-50%,-50%) scale(2.4); opacity:0; }
+  }
+  .tapbeat-bpm-row{
+    width:100%; display:flex; flex-direction:column; align-items:center; gap:8px;
+  }
+  .tapbeat-bpm-label{ font-size:13.5px; color:var(--soil-mid); }
+  .tapbeat-bpm-label b{ color:var(--amber-deep); }
+  .tapbeat-bpm-row input[type="range"]{
+    width:100%; -webkit-appearance:none; appearance:none; height:4px;
+    border-radius:4px; background:var(--line); outline:none;
+  }
+  .tapbeat-bpm-row input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; appearance:none; width:22px; height:22px; border-radius:50%;
+    background:var(--amber); box-shadow:0 0 8px rgba(192,138,52,0.5); cursor:pointer; border:none;
+  }
+  .tapbeat-bpm-row input[type="range"]::-moz-range-thumb{
+    width:22px; height:22px; border-radius:50%; background:var(--amber);
+    box-shadow:0 0 8px rgba(192,138,52,0.5); cursor:pointer; border:none;
+  }
+  .tapbeat-presets{ display:flex; gap:8px; }
+
+  /* ---------- Resources ---------- */
+  .res-search{
+    display:flex; gap:8px; margin-bottom:8px;
+  }
+  .res-zip-input{
+    flex:1; border:1.5px solid var(--line); border-radius:11px;
+    padding:11px 14px; font-family:'IBM Plex Mono',monospace; font-size:15px; letter-spacing:.03em;
+    background:var(--topsoil-2); color:var(--soil-dark);
+  }
+  .res-zip-input:focus{ outline:none; border-color:var(--moss); background:var(--card-bg); }
+  .res-locate-btn{
+    display:flex; align-items:center; gap:6px; flex:0 0 auto;
+    border:1.5px solid var(--line); background:var(--card-bg); border-radius:11px;
+    padding:0 14px; font-size:12.5px; font-weight:600; color:var(--soil-mid);
+  }
+  .res-locate-btn svg{ width:15px; height:15px; }
+  .res-status{
+    font-size:12px; color:var(--soil-mid); min-height:16px; margin-bottom:16px;
+  }
+  .res-disclaimer{
+    font-size:11.5px; color:var(--soil-mid); line-height:1.5; margin:2px 2px 18px;
+    padding:10px 12px; background:var(--topsoil-2); border-radius:10px;
+  }
+  .res-card{
+    background:var(--card-bg); border:1px solid var(--line); border-radius:16px;
+    padding:16px 18px; margin-bottom:12px; box-shadow:var(--shadow);
+  }
+  .res-card h4{
+    font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin:0 0 4px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .res-card p{ font-size:13px; color:var(--soil-mid); margin:0 0 12px; line-height:1.4; }
+  .res-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+  .res-btn{
+    display:inline-flex; align-items:center; gap:6px;
+    border-radius:20px; padding:8px 14px; font-size:12.5px; font-weight:700;
+    text-decoration:none; border:1.5px solid transparent;
+  }
+  .res-btn.primary{ color:#fff; }
+  .res-btn.secondary{ background:var(--card-bg); border-color:var(--line); color:var(--soil-mid); }
+  .res-btn[aria-disabled="true"]{ opacity:.45; pointer-events:none; }
+
+  /* ---------- Sounds ---------- */
+  .sound-grid{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:9px; margin-bottom:16px;
+  }
+  .sound-tile{
+    display:flex; align-items:center; gap:10px;
+    border:1.5px solid var(--line); border-radius:14px; background:var(--card-bg);
+    padding:12px 12px; text-align:left;
+  }
+  .sound-tile-icon{ font-size:20px; flex:0 0 auto; }
+  .sound-tile-label{ font-size:13px; font-weight:600; color:var(--soil-dark); line-height:1.25; }
+  .sound-tile-sub{ font-size:10.5px; color:var(--soil-mid); font-family:'IBM Plex Mono',monospace; }
+  .sound-tile.active{ background:var(--moss); border-color:var(--moss-deep); }
+  .sound-tile.active .sound-tile-label{ color:#fff; }
+  .sound-tile.active .sound-tile-sub{ color:rgba(255,255,255,0.75); }
+
+  .sound-controls{
+    display:flex; align-items:center; gap:12px; margin-bottom:8px;
+  }
+  .sound-vol-icon{ flex:0 0 auto; color:var(--soil-mid); }
+  .sound-vol-slider{ flex:1; accent-color:var(--moss-deep); }
+  .sound-stop-btn{
+    flex:0 0 auto; border:1.5px solid var(--line); background:var(--card-bg); border-radius:20px;
+    padding:7px 14px; font-size:12px; font-weight:600; color:var(--soil-mid);
+  }
+
+  .binaural-panel{ display:none; margin-top:2px; margin-bottom:14px; }
+  .binaural-panel.show{ display:block; }
+  .binaural-presets{ display:flex; gap:7px; margin-top:8px; }
+  .binaural-preset-btn{
+    flex:1; border:1.5px solid var(--line); background:var(--card-bg); border-radius:11px;
+    padding:9px 6px; text-align:center;
+  }
+  .binaural-preset-btn.active{ background:var(--sky-deep); border-color:var(--sky-deep); }
+  .binaural-preset-btn.active .bp-label, .binaural-preset-btn.active .bp-sub{ color:#fff; }
+  .bp-label{ font-size:12px; font-weight:700; color:var(--soil-dark); display:block; }
+  .bp-sub{ font-size:10px; color:var(--soil-mid); font-family:'IBM Plex Mono',monospace; }
+  .headphone-note{
+    font-size:12px; color:var(--soil-mid); font-style:italic; font-family:'Fraunces',serif;
+  }
+
+  /* ---------- Setup ---------- */
+  .about-row{ display:flex; align-items:center; gap:14px; }
+  .about-mark{ width:44px; height:44px; flex:0 0 auto; }
+  .about-name{ font-family:'Fraunces',serif; font-weight:600; font-size:19px; }
+  .about-badge{
+    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.06em;
+    text-transform:uppercase; background:var(--clay-deep); color:#fff; padding:2px 8px; border-radius:8px;
+    margin-left:6px; vertical-align:middle;
+  }
+  .about-dev{ font-size:12.5px; color:var(--soil-mid); margin-top:3px; }
+
+  .theme-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; }
+  .theme-swatch{
+    border:1.5px solid var(--line); border-radius:14px; background:var(--card-bg); padding:10px 6px;
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+  }
+  .theme-swatch.active{ border-color:var(--moss-deep); box-shadow:0 0 0 2px var(--moss-deep) inset; }
+  .swatch-dots{ display:flex; gap:3px; }
+  .swatch-dot{ width:12px; height:12px; border-radius:50%; }
+  .swatch-label{ font-size:11px; font-weight:600; color:var(--soil-dark); }
+
+  .disclaimer-text{ font-size:12.5px; line-height:1.6; color:var(--soil-mid); }
+  .disclaimer-text strong{ color:var(--soil-dark); }
+
+  .feedback-btn{
+    display:flex; align-items:center; justify-content:center; gap:8px; width:100%;
+  }
+
+  .legal-details{ font-size:12.5px; line-height:1.6; color:var(--soil-mid); }
+  .legal-details summary{
+    font-family:'Fraunces',serif; font-weight:600; font-size:16px; color:var(--soil-dark);
+    cursor:pointer; list-style:none; display:flex; align-items:center; gap:8px;
+  }
+  .legal-details summary::-webkit-details-marker{ display:none; }
+  .legal-details summary::before{ content:"›"; font-size:18px; transition:transform .2s ease; display:inline-block; }
+  .legal-details[open] summary::before{ transform:rotate(90deg); }
+  .legal-details p{ margin:12px 0 0; }
+  .legal-details strong{ color:var(--soil-dark); }
+
+  /* ---------- Home ---------- */
+  .home-greeting{
+    font-family:'Fraunces',serif; font-weight:600; font-size:24px; margin:4px 2px 2px;
+  }
+  .home-date{ font-size:12.5px; color:var(--soil-mid); margin:0 2px 18px; font-family:'IBM Plex Mono',monospace; }
+
+  .mood-row{ display:flex; justify-content:space-between; gap:6px; margin-top:6px; }
+  .mood-btn{
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;
+    border:1.5px solid var(--line); background:var(--card-bg); border-radius:14px;
+    padding:10px 4px;
+  }
+  .mood-btn .mood-emoji{ font-size:22px; }
+  .mood-btn .mood-label{ font-size:9.5px; color:var(--soil-mid); font-weight:600; }
+  .mood-btn.selected{ background:var(--sky); border-color:var(--sky-deep); }
+  .mood-btn.selected .mood-label{ color:#fff; }
+
+  /* ---------- Control scale ---------- */
+  .scale-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-top:6px; }
+  .scale-btn{
+    background:var(--card-bg); border:1px solid var(--line); border-radius:10px;
+    padding:12px 0; font-weight:600; font-size:15px; color:var(--soil-dark); text-align:center;
+  }
+  .scale-btn.selected{ background:var(--clay); border-color:var(--clay-deep); color:#fff; }
+  .scale-labels{
+    display:flex; justify-content:space-between; margin-top:8px;
+    font-size:10.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--soil-mid);
+  }
+  .mood-logged-msg{
+    font-family:'Fraunces',serif; font-style:italic; font-size:13px; color:var(--sky-deep);
+    margin-top:12px; text-align:center;
+  }
+
+  .streak-row{ display:flex; gap:10px; }
+  .streak-box{
+    flex:1; background:var(--card-bg); border:1px solid var(--line); border-radius:14px;
+    padding:14px; text-align:center;
+  }
+  .streak-num{ font-family:'Fraunces',serif; font-weight:600; font-size:26px; color:var(--soil-dark); }
+  .streak-label{ font-size:11px; color:var(--soil-mid); margin-top:2px; }
+
+  .home-quicklink{
+    display:flex; align-items:center; justify-content:space-between; width:100%;
+    border:none; background:none; padding:0; text-align:left;
+  }
+  .home-quicklink-arrow{ color:var(--soil-mid); flex:0 0 auto; }
+
+  /* ---------- Quotes ---------- */
+  .quote-text{
+    font-family:'Fraunces',serif; font-style:italic; font-size:17px; line-height:1.5;
+    color:var(--soil-dark); margin:6px 0 10px;
+  }
+  .quote-author{
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--soil-mid);
+    letter-spacing:.03em;
+  }
+  .quote-shuffle-btn{ margin-top:14px; }
+
+  /* ---------- Disclaimer gate ---------- */
+  .gate-overlay{
+    position:fixed; inset:0; z-index:200;
+    background:var(--paper);
+    display:none;
+    flex-direction:column;
+    padding:28px 22px calc(28px + env(safe-area-inset-bottom));
+    overflow-y:auto;
+  }
+  html.gate-pending .gate-overlay{ display:flex; }
+  .gate-mark{ width:52px; height:52px; margin-bottom:16px; }
+  .gate-title{
+    font-family:'Fraunces',serif; font-weight:600; font-size:23px; margin-bottom:4px;
+  }
+  .gate-sub{ font-size:13px; color:var(--soil-mid); margin-bottom:20px; }
+  .gate-text{
+    font-size:13.5px; line-height:1.65; color:var(--soil-dark);
+    background:var(--card-bg); border:1px solid var(--line); border-radius:16px;
+    padding:18px; margin-bottom:20px; flex:0 0 auto;
+  }
+  .gate-text strong{ color:var(--soil-dark); }
+  .gate-check-row{
+    display:flex; align-items:flex-start; gap:10px; margin-bottom:20px;
+    font-size:13px; color:var(--soil-mid); line-height:1.4;
+  }
+  .gate-check-row input{ margin-top:2px; flex:0 0 auto; width:18px; height:18px; accent-color:var(--moss-deep); }
+  .gate-actions{ margin-top:auto; }
+  .gate-btn{
+    width:100%; text-align:center; font-size:15px; padding:14px;
+  }
+  .gate-btn[aria-disabled="true"]{ opacity:.4; pointer-events:none; }
+</style>
+</head>
+<body>
+<script>
+  try{
+    var __t = localStorage.getItem('groundwork_theme');
+    if(__t) document.documentElement.setAttribute('data-theme', __t);
+    if(localStorage.getItem('groundwork_disclaimer_accepted') !== 'true'){
+      document.documentElement.classList.add('gate-pending');
+    }
+  } catch(e){
+    document.documentElement.classList.add('gate-pending');
+  }
+</script>
+
+<div class="crisis-bar">
+  <span class="crisis-text">Crisis? Help is available 24/7.</span>
+  <div class="crisis-actions">
+    <a class="crisis-btn" href="tel:988">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Call 988
+    </a>
+    <a class="crisis-btn" href="sms:988">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Text 988
+    </a>
+  </div>
+</div>
+
+<header class="strata">
+  <span class="strata-label top mono">TOPSOIL</span>
+  <span class="strata-label mid mono">SUBSOIL</span>
+  <span class="strata-label bed mono">BEDROCK</span>
+  <div class="brand-row">
+    <svg class="mark" viewBox="0 0 40 40" fill="none">
+      <circle cx="20" cy="20" r="19" stroke="#FBF8F1" stroke-width="1.4" opacity="0.55"/>
+      <path d="M4 24c4-3 8 3 12 0s8-3 12 0 8 3 8 3" stroke="#FBF8F1" stroke-width="1.6" fill="none" opacity="0.85"/>
+      <path d="M4 30c4-3 8 3 12 0s8-3 12 0 8 3 8 3" stroke="#FBF8F1" stroke-width="1.6" fill="none"/>
+      <circle cx="20" cy="13" r="3.2" fill="#FBF8F1"/>
+    </svg>
+    <div class="wordmark">Groundwork</div>
+  </div>
+  <div class="tagline">tools for finding your footing</div>
+</header>
+
+<main>
+
+<div class="view active" id="view-home">
+  <div class="home-greeting" id="homeGreeting">Hi</div>
+  <div class="home-date" id="homeDate">&nbsp;</div>
+
+  <div class="card">
+    <h3><span class="dot sky"></span>How are you today?</h3>
+    <div class="mood-row" id="moodRow">
+      <button class="mood-btn" data-mood="1"><span class="mood-emoji">😞</span><span class="mood-label">Rough</span></button>
+      <button class="mood-btn" data-mood="2"><span class="mood-emoji">😕</span><span class="mood-label">Low</span></button>
+      <button class="mood-btn" data-mood="3"><span class="mood-emoji">😐</span><span class="mood-label">Okay</span></button>
+      <button class="mood-btn" data-mood="4"><span class="mood-emoji">🙂</span><span class="mood-label">Good</span></button>
+      <button class="mood-btn" data-mood="5"><span class="mood-emoji">😄</span><span class="mood-label">Great</span></button>
+    </div>
+    <div class="mood-logged-msg" id="moodMsg" style="display:none;">Logged for today. Tap another to change it.</div>
+  </div>
+
+  <div class="section-eyebrow">Your streaks</div>
+  <div class="streak-row">
+    <div class="streak-box">
+      <div class="streak-num" id="journalStreak">0</div>
+      <div class="streak-label">day journal streak</div>
+    </div>
+    <div class="streak-box">
+      <div class="streak-num" id="gratitudeStreak">0</div>
+      <div class="streak-label">day gratitude streak</div>
+    </div>
+  </div>
+
+  <div class="section-eyebrow">Quick links</div>
+  <div class="card">
+    <button class="home-quicklink" data-goto="journal">
+      <span><strong style="font-family:'Fraunces',serif;font-weight:600;">Today's journal prompt</strong><br><span class="sub" style="margin:2px 0 0;" id="homePromptPreview">&nbsp;</span></span>
+      <svg class="home-quicklink-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+  <div class="card">
+    <button class="home-quicklink" data-goto="gratitude">
+      <span><strong style="font-family:'Fraunces',serif;font-weight:600;">Gratitude &amp; encouragement</strong><br><span class="sub" style="margin:2px 0 0;">Log today's 5, or shuffle a quote</span></span>
+      <svg class="home-quicklink-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+  <div class="card">
+    <button class="home-quicklink" data-goto="calm">
+      <span><strong style="font-family:'Fraunces',serif;font-weight:600;">Need to calm down?</strong><br><span class="sub" style="margin:2px 0 0;">Breathing, grounding, sounds, quiet games</span></span>
+      <svg class="home-quicklink-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+</div><!-- /view-home -->
+
+<div class="view" id="view-calm">
+  <div class="section-eyebrow">Calm</div>
+
+  <!-- BOX BREATHING -->
+  <div class="card">
+    <h3><span class="dot sky"></span>Box Breathing</h3>
+    <p class="sub">Four seconds in, four seconds held, four seconds out, four seconds held. Slows the nervous system down.</p>
+    <div class="breath-wrap">
+      <div class="breath-ring" id="breathRing">
+        <div class="breath-core">
+          <div class="breath-phase" id="breathPhase">Ready</div>
+          <div class="breath-count" id="breathCount">&nbsp;</div>
+        </div>
+      </div>
+      <div class="breath-meta">
+        <div>Cycles <b id="breathCycles">0</b></div>
+        <div>Elapsed <b id="breathElapsed">0:00</b></div>
+      </div>
+      <div class="breath-controls">
+        <button class="btn sky" id="breathStart">Start</button>
+        <button class="btn ghost" id="breathReset">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GROUNDING 5-4-3-2-1 -->
+  <div class="card">
+    <h3><span class="dot moss"></span>Grounding · 5-4-3-2-1</h3>
+    <p class="sub">Work through your senses to land back in the room you're in.</p>
+    <div id="groundSteps"></div>
+    <div class="ground-progress-track"><div class="ground-progress-fill" id="groundFill"></div></div>
+    <div class="ground-done-msg" id="groundDone">You're here. You're grounded.</div>
+    <button class="btn ghost" id="groundReset" style="margin-top:10px;">Reset</button>
+  </div>
+
+  <!-- URGE / WAVE SURFING -->
+  <div class="card">
+    <h3><span class="dot clay"></span>Riding the Wave</h3>
+    <p class="sub">Urges rise, peak, and pass on their own &mdash; usually within a few minutes. You don't have to act on it, just ride it out.</p>
+    <div class="wave-presets">
+      <button class="preset-btn active" data-secs="90">90s</button>
+      <button class="preset-btn" data-secs="180">3m</button>
+      <button class="preset-btn" data-secs="300">5m</button>
+    </div>
+    <div class="wave-timer" id="waveTimer">1:30</div>
+    <div class="wave-prompt" id="wavePrompt">Notice the urge without judging it. Where do you feel it in your body?</div>
+    <div class="wave-bar"><div class="wave-bar-fill" id="waveFill"></div></div>
+    <div class="wave-controls">
+      <button class="btn clay" id="waveStart">Start</button>
+      <button class="btn ghost" id="waveReset">Reset</button>
+    </div>
+  </div>
+
+  <div class="section-eyebrow">Coping skills</div>
+  <div id="accordion"></div>
+
+  <div class="section-eyebrow">Quiet games</div>
+  <div class="segmented" id="gameSeg">
+    <button class="seg-btn active" data-game="bubbles">Bubbles</button>
+    <button class="seg-btn" data-game="sand">Sand Garden</button>
+    <button class="seg-btn" data-game="match">Slow Match</button>
+    <button class="seg-btn" data-game="tapbeat">Tap Beat</button>
+  </div>
+
+  <div class="card" id="bubblesCard">
+    <h3><span class="dot sky"></span>Bubble Wrap</h3>
+    <p class="sub">Pop at your own pace. No goal, no timer.</p>
+    <div class="bubble-grid" id="bubbleGrid"></div>
+    <button class="btn ghost" id="bubbleReset" style="margin-top:14px;">Re-inflate</button>
+  </div>
+
+  <div class="card" id="sandCard" style="display:none;">
+    <h3><span class="dot clay"></span>Sand Garden</h3>
+    <p class="sub">Drag your finger across the sand to rake it.</p>
+    <div class="sand-wrap">
+      <canvas id="sandCanvas" class="sand-canvas"></canvas>
+      <div class="sand-hint" id="sandHint">touch and drag to rake</div>
+    </div>
+    <button class="btn ghost" id="sandReset" style="margin-top:14px;">Smooth the sand</button>
+  </div>
+
+  <div class="card" id="matchCard" style="display:none;">
+    <h3><span class="dot moss"></span>Slow Match</h3>
+    <p class="sub">Find the pairs. There's no clock.</p>
+    <div class="match-grid" id="matchGrid"></div>
+    <div class="match-status mono" id="matchStatus">0 / 8 pairs</div>
+    <button class="btn ghost" id="matchReset" style="margin-top:12px;">New board</button>
+  </div>
+
+  <div class="card" id="tapbeatCard" style="display:none;">
+    <h3><span class="dot amber"></span>Tap to the Beat</h3>
+    <p class="sub">Set your own pace and tap along. No score, no pressure &mdash; just rhythm.</p>
+    <div class="tapbeat-wrap">
+      <div class="tapbeat-rings" id="tapbeatZone">
+        <div class="tapbeat-ring" id="tapbeatRing1"></div>
+        <div class="tapbeat-ring" id="tapbeatRing2"></div>
+        <div class="tapbeat-core" id="tapbeatCore"></div>
+      </div>
+      <div class="tapbeat-bpm-row">
+        <div class="tapbeat-bpm-label">Pace: <b id="tapbeatBpmValue">60</b> BPM</div>
+        <input type="range" id="tapbeatBpmSlider" min="30" max="100" value="60" step="1">
+        <div class="tapbeat-presets">
+          <button class="preset-btn" data-bpm="40">Very slow</button>
+          <button class="preset-btn active" data-bpm="60">Breathing</button>
+          <button class="preset-btn" data-bpm="80">Steady</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-eyebrow">Sounds</div>
+  <div class="card">
+    <h3><span class="dot sky"></span>Calming Sounds</h3>
+    <p class="sub">Nature sounds, slow noise, and a generative ambient pad &mdash; all synthesized, nothing streamed.</p>
+
+    <div class="sound-grid" id="soundGrid">
+      <button class="sound-tile" data-key="rain"><span class="sound-tile-icon">🌧️</span><span><span class="sound-tile-label">Rain</span><br><span class="sound-tile-sub">nature</span></span></button>
+      <button class="sound-tile" data-key="ocean"><span class="sound-tile-icon">🌊</span><span><span class="sound-tile-label">Ocean</span><br><span class="sound-tile-sub">nature</span></span></button>
+      <button class="sound-tile" data-key="forest"><span class="sound-tile-icon">🌲</span><span><span class="sound-tile-label">Forest</span><br><span class="sound-tile-sub">nature</span></span></button>
+      <button class="sound-tile" data-key="cat"><span class="sound-tile-icon">🐱</span><span><span class="sound-tile-label">Cat Purring</span><br><span class="sound-tile-sub">nature</span></span></button>
+      <button class="sound-tile" data-key="ambient"><span class="sound-tile-icon">🎐</span><span><span class="sound-tile-label">Ambient Pad</span><br><span class="sound-tile-sub">slow, ~70 bpm feel</span></span></button>
+      <button class="sound-tile" data-key="white"><span class="sound-tile-icon">⚪</span><span><span class="sound-tile-label">White Noise</span><br><span class="sound-tile-sub">masking</span></span></button>
+      <button class="sound-tile" data-key="pink"><span class="sound-tile-icon">🌸</span><span><span class="sound-tile-label">Pink Noise</span><br><span class="sound-tile-sub">masking</span></span></button>
+      <button class="sound-tile" data-key="brown"><span class="sound-tile-icon">🟤</span><span><span class="sound-tile-label">Brown Noise</span><br><span class="sound-tile-sub">deep, for sleep</span></span></button>
+      <button class="sound-tile" data-key="binaural"><span class="sound-tile-icon">🎧</span><span><span class="sound-tile-label">Binaural Beats</span><br><span class="sound-tile-sub">needs headphones</span></span></button>
+    </div>
+
+    <div class="binaural-panel" id="binauralPanel">
+      <div class="headphone-note">Binaural beats only work over stereo headphones &mdash; through speakers the two tones just blend together.</div>
+      <div class="binaural-presets" id="binauralPresets">
+        <button class="binaural-preset-btn active" data-hz="3"><span class="bp-label">Deep Calm</span><span class="bp-sub">delta · 3 hz</span></button>
+        <button class="binaural-preset-btn" data-hz="6"><span class="bp-label">Relaxed</span><span class="bp-sub">theta · 6 hz</span></button>
+        <button class="binaural-preset-btn" data-hz="10"><span class="bp-label">Calm Focus</span><span class="bp-sub">alpha · 10 hz</span></button>
+      </div>
+    </div>
+
+    <div class="sound-controls">
+      <svg class="sound-vol-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
+      <input type="range" class="sound-vol-slider" id="soundVolume" min="0" max="100" value="55">
+      <button class="sound-stop-btn" id="soundStop">Stop</button>
+    </div>
+  </div>
+
+</div><!-- /view-calm -->
+
+<div class="view" id="view-control">
+  <div class="section-eyebrow">Control</div>
+
+  <div class="card">
+    <h3><span class="dot moss"></span>50 things I can control</h3>
+    <p class="sub">What I need to focus on right now.</p>
+    <div class="grat-progress-track"><div class="grat-progress-fill" id="ctrlFill" style="background:var(--moss-deep);"></div></div>
+    <div class="journal-footer" style="margin-top:8px;">
+      <span class="acc-count mono" id="ctrlCount">0 / 50</span>
+      <button class="btn ghost" id="ctrlReset" style="padding:6px 12px;font-size:12.5px;">Reset</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div id="ctrlList"></div>
+  </div>
+
+  <div class="section-eyebrow">Right now</div>
+  <div class="card">
+    <h3><span class="dot clay"></span>How much control do I have?</h3>
+    <p class="sub">Tap the number that fits this situation.</p>
+    <div class="scale-grid" id="scaleGrid"></div>
+    <div class="scale-labels">
+      <span>Can control</span>
+      <span>Can't control</span>
+    </div>
+  </div>
+
+</div><!-- /view-control -->
+
+<div class="view" id="view-journal">
+  <div class="section-eyebrow">Journal</div>
+
+  <div class="segmented">
+    <button class="seg-btn active" data-mode="prompted">Today's Prompt</button>
+    <button class="seg-btn" data-mode="freestyle">Freestyle</button>
+  </div>
+
+  <!-- PROMPTED -->
+  <div class="card" id="promptedCard">
+    <div class="journal-date mono" id="journalDate">&nbsp;</div>
+    <div class="journal-prompt" id="journalPromptText">&nbsp;</div>
+    <textarea class="journal-textarea" id="promptedTextarea" placeholder="Start writing..."></textarea>
+    <div class="journal-footer">
+      <button class="prompt-shuffle" id="promptShuffle">↻ Another prompt</button>
+      <span class="journal-wordcount mono" id="promptedWordcount">0 words</span>
+    </div>
+    <div class="journal-footer" style="margin-top:10px;">
+      <button class="btn sky" id="promptedSave">Save entry</button>
+      <span class="journal-saved-flash" id="promptedFlash">Saved</span>
+    </div>
+  </div>
+
+  <!-- FREESTYLE -->
+  <div class="card" id="freestyleCard" style="display:none;">
+    <h3><span class="dot clay"></span>Freestyle</h3>
+    <p class="sub">No prompt, no structure. Write whatever's on your mind.</p>
+    <textarea class="journal-textarea" id="freestyleTextarea" placeholder="Write anything..."></textarea>
+    <div class="journal-footer">
+      <span></span>
+      <span class="journal-wordcount mono" id="freestyleWordcount">0 words</span>
+    </div>
+    <div class="journal-footer" style="margin-top:10px;">
+      <button class="btn clay" id="freestyleSave">Save entry</button>
+      <span class="journal-saved-flash" id="freestyleFlash">Saved</span>
+    </div>
+  </div>
+
+  <div class="section-eyebrow">Your entries</div>
+  <div class="entries-list" id="entriesList">
+    <div class="entries-empty">Entries you save will show up here.</div>
+  </div>
+
+</div><!-- /view-journal -->
+
+<div class="view" id="view-gratitude">
+  <div class="section-eyebrow">Gratitude</div>
+
+  <div class="card">
+    <h3><span class="dot amber"></span>Encouragement</h3>
+    <div class="quote-text" id="quoteText">&nbsp;</div>
+    <div class="quote-author mono" id="quoteAuthor">&nbsp;</div>
+    <button class="btn amber quote-shuffle-btn" id="quoteShuffle">↻ Shuffle</button>
+  </div>
+
+  <div class="card">
+    <h3><span class="dot amber"></span>Today's Gratitude</h3>
+    <p class="sub" id="gratDateSub">List 5 things you're grateful for today. Try to reach for something new each time.</p>
+    <div id="gratInputs"></div>
+    <div class="grat-progress-track"><div class="grat-progress-fill" id="gratFill"></div></div>
+    <div class="grat-done-msg" id="gratDone">Five for today. Nice work.</div>
+    <div class="journal-footer" style="margin-top:14px;">
+      <button class="btn amber" id="gratSave">Save today's list</button>
+      <span class="journal-saved-flash" id="gratFlash">Saved</span>
+    </div>
+  </div>
+
+  <div class="section-eyebrow">Past days</div>
+  <div id="gratHistory">
+    <div class="entries-empty">Days you've saved will show up here.</div>
+  </div>
+
+</div><!-- /view-gratitude -->
+
+<div class="view" id="view-resources">
+  <div class="section-eyebrow">Resources</div>
+
+  <div class="res-search">
+    <input type="text" class="res-zip-input" id="resZip" placeholder="ZIP code" inputmode="numeric" maxlength="5">
+    <button class="res-locate-btn" id="resLocate">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+      Use my location
+    </button>
+  </div>
+  <div class="res-status" id="resStatus">&nbsp;</div>
+
+  <div class="res-disclaimer">
+    These buttons open independent, external directories in a new tab using the zip code above. Groundwork doesn't operate these services and can't guarantee current availability &mdash; always call ahead when you can.
+  </div>
+
+  <div id="resCards"></div>
+
+</div><!-- /view-resources -->
+
+<div class="view" id="view-setup">
+  <div class="section-eyebrow">Setup</div>
+
+  <div class="card">
+    <div class="about-row">
+      <svg class="about-mark" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="19" stroke="var(--soil-mid)" stroke-width="1.4" opacity="0.4"/>
+        <path d="M4 24c4-3 8 3 12 0s8-3 12 0 8 3 8 3" stroke="var(--moss-deep)" stroke-width="1.6" fill="none" opacity="0.85"/>
+        <path d="M4 30c4-3 8 3 12 0s8-3 12 0 8 3 8 3" stroke="var(--moss-deep)" stroke-width="1.6" fill="none"/>
+        <circle cx="20" cy="13" r="3.2" fill="var(--clay-deep)"/>
+      </svg>
+      <div>
+        <div class="about-name">Groundwork<span class="about-badge">Beta</span></div>
+        <div class="about-dev">Developed by Steve Dangler</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-eyebrow">Appearance</div>
+  <div class="card">
+    <h3><span class="dot moss"></span>Color Theme</h3>
+    <p class="sub">Pick the palette that feels right for you.</p>
+    <div class="theme-grid" id="themeGrid">
+      <button class="theme-swatch" data-theme="soil">
+        <div class="swatch-dots"><span class="swatch-dot" style="background:#6B4F3A;"></span><span class="swatch-dot" style="background:#5C7A52;"></span><span class="swatch-dot" style="background:#B4703F;"></span></div>
+        <span class="swatch-label">Soil</span>
+      </button>
+      <button class="theme-swatch" data-theme="sage">
+        <div class="swatch-dots"><span class="swatch-dot" style="background:#DCEBDD;"></span><span class="swatch-dot" style="background:#2E7D5B;"></span><span class="swatch-dot" style="background:#3E8E96;"></span></div>
+        <span class="swatch-label">Sage</span>
+      </button>
+      <button class="theme-swatch" data-theme="ocean">
+        <div class="swatch-dots"><span class="swatch-dot" style="background:#DCEAF0;"></span><span class="swatch-dot" style="background:#2E6FA6;"></span><span class="swatch-dot" style="background:#2C7A8C;"></span></div>
+        <span class="swatch-label">Ocean</span>
+      </button>
+      <button class="theme-swatch" data-theme="dark">
+        <div class="swatch-dots"><span class="swatch-dot" style="background:#161310;"></span><span class="swatch-dot" style="background:#6FA867;"></span><span class="swatch-dot" style="background:#D08F57;"></span></div>
+        <span class="swatch-label">Dark</span>
+      </button>
+      <button class="theme-swatch" data-theme="vivid">
+        <div class="swatch-dots"><span class="swatch-dot" style="background:#FF6B3D;"></span><span class="swatch-dot" style="background:#1FA35C;"></span><span class="swatch-dot" style="background:#2E8FE0;"></span></div>
+        <span class="swatch-label">Vivid</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="section-eyebrow">Reminders</div>
+  <div class="card">
+    <h3><span class="dot amber"></span>Daily Reminder</h3>
+    <p class="sub">A gentle nudge to check in with yourself. This only fires while Groundwork is open in your browser &mdash; for a guaranteed alarm, use your phone's own clock app.</p>
+    <input type="time" id="reminderTime" value="09:00" style="width:100%; border:1.5px solid var(--line); border-radius:11px; padding:10px 12px; font-family:'IBM Plex Mono',monospace; font-size:15px; background:var(--topsoil-2); color:var(--soil-dark); margin-bottom:14px;">
+    <button class="btn amber feedback-btn" id="reminderToggle">Enable Daily Reminder</button>
+    <div class="journal-saved-flash" id="reminderFlash">Reminder updated</div>
+  </div>
+
+  <div class="section-eyebrow">Medical disclaimer</div>
+  <div class="card">
+    <p class="disclaimer-text">
+      <strong>Groundwork is not a medical device</strong> and does not provide medical advice, diagnosis, or treatment. The breathing exercises, journal prompts, coping skills, and other content in this app are offered for general self-care and informational purposes only, and are not a substitute for care from a licensed physician, therapist, or other qualified healthcare provider.<br><br>
+      <strong>If you are experiencing a medical emergency, call 911</strong> or go to your nearest emergency room. If you are in crisis or having thoughts of suicide, call or text <strong>988</strong> to reach the Suicide &amp; Crisis Lifeline, available 24/7.<br><br>
+      Always talk with a qualified healthcare professional before making decisions about your physical or mental health, and before starting, stopping, or changing any treatment.
+    </p>
+  </div>
+
+  <div class="section-eyebrow">Legal</div>
+  <div class="card">
+    <details class="legal-details">
+      <summary>Privacy Policy</summary>
+      <p>Groundwork respects your privacy. Journal entries, gratitude lists, and your color theme preference are stored <strong>locally on your device</strong> using your browser's storage. This information is never transmitted to Steve Dangler, Groundwork, or any third party &mdash; there is no account, login, or cloud sync.</p>
+      <p>Location data used in the Resources tab is used only to build search links to third-party directories (like SAMHSA's treatment locator or Psychology Today) and is not stored or transmitted anywhere by Groundwork itself.</p>
+      <p>If you use Send Suggestions, whatever you write is sent directly through your device's own email app to Steve Dangler's inbox &mdash; it isn't stored by Groundwork first.</p>
+      <p>Clearing your browser data, uninstalling the app, or switching devices will permanently delete all locally stored information unless you've exported it first from the Your Data section below.</p>
+    </details>
+  </div>
+  <div class="card">
+    <details class="legal-details">
+      <summary>Terms of Service</summary>
+      <p>By using Groundwork, you agree to use it for personal, lawful, self-care purposes only.</p>
+      <p>Groundwork is provided <strong>"as is"</strong> without warranties of any kind, express or implied. Steve Dangler is not liable for any damages, losses, or harm arising from use of, or inability to use, this app, including reliance on any exercise, prompt, or third-party resource link it provides.</p>
+      <p>Groundwork is not a substitute for professional medical or mental health care &mdash; see the Medical Disclaimer above for details.</p>
+      <p>Third-party resources linked in the Resources tab are independently operated. Groundwork does not guarantee their accuracy, availability, or suitability for any particular need.</p>
+      <p>These terms may be updated as the app develops. Continued use after an update means you accept the current terms.</p>
+    </details>
+  </div>
+
+  <div class="section-eyebrow">Your data</div>
+  <div class="card">
+    <h3><span class="dot clay"></span>Export My Data</h3>
+    <p class="sub">Journal entries, gratitude lists, and settings are stored only on this device. Export a copy before switching phones or clearing your browser.</p>
+    <button class="btn clay feedback-btn" id="exportBtn">Export My Data</button>
+    <div class="journal-saved-flash" id="exportFlash">Downloaded</div>
+  </div>
+
+  <div class="section-eyebrow">Feedback</div>
+  <div class="card">
+    <h3><span class="dot sky"></span>Beta Feedback</h3>
+    <p class="sub">This app is in beta. Found a bug, or have an idea for something that would help? Let me know.</p>
+    <a class="btn sky feedback-btn" id="feedbackBtn" href="mailto:sdangler99@gmail.com?subject=Groundwork%20Beta%20Feedback&body=Device%3A%20%0AWhat%20happened%3A%20%0A%0A">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+      Send Suggestions
+    </a>
+  </div>
+
+</div><!-- /view-setup -->
+
+</main>
+
+<nav class="bottom">
+  <button class="navbtn active" data-view="home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/></svg>
+    Home
+  </button>
+  <button class="navbtn" data-view="calm">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12c4-3 8 3 12 0s6-2 6-2M3 17c4-3 8 3 12 0s6-2 6-2"/></svg>
+    Calm
+  </button>
+  <button class="navbtn" data-view="control">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.3"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg>
+    Control
+  </button>
+  <button class="navbtn" data-view="journal">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+    Journal
+  </button>
+  <button class="navbtn" data-view="gratitude">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.35-9.5-9C.7 8.13 3 5 6 5c2 0 4 1.5 6 5 2-3.5 4-5 6-5 3 0 5.3 3.13 3.5 7-2.5 4.65-9.5 9-9.5 9z"/></svg>
+    Gratitude
+  </button>
+  <button class="navbtn" data-view="resources">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    Resources
+  </button>
+  <button class="navbtn" data-view="setup">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 0 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 0 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.55V3a2 2 0 0 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 0 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1z"/></svg>
+    Setup
+  </button>
+</nav>
+
+<script>
+/* ================= BOX BREATHING ================= */
+(function(){
+  const ring = document.getElementById('breathRing');
+  const phaseEl = document.getElementById('breathPhase');
+  const countEl = document.getElementById('breathCount');
+  const cyclesEl = document.getElementById('breathCycles');
+  const elapsedEl = document.getElementById('breathElapsed');
+  const startBtn = document.getElementById('breathStart');
+  const resetBtn = document.getElementById('breathReset');
+
+  const phases = [
+    {name:'Inhale', scale:1, secs:4},
+    {name:'Hold', scale:1, secs:4},
+    {name:'Exhale', scale:0.62, secs:4},
+    {name:'Hold', scale:0.62, secs:4},
+  ];
+  let running=false, phaseIdx=0, tickTimer=null, secLeft=4, cycles=0, elapsedSecs=0;
+
+  function renderPhase(){
+    const p = phases[phaseIdx];
+    phaseEl.textContent = p.name;
+    ring.style.transition = 'transform 4s cubic-bezier(.45,0,.55,1)';
+    ring.style.transform = 'scale(' + p.scale + ')';
+    secLeft = p.secs;
+    countEl.textContent = secLeft;
+  }
+
+  function tick(){
+    secLeft -= 1;
+    if(secLeft <= 0){
+      phaseIdx = (phaseIdx+1) % phases.length;
+      if(phaseIdx === 0){ cycles++; cyclesEl.textContent = cycles; }
+      renderPhase();
+    } else {
+      countEl.textContent = secLeft;
+    }
+    elapsedSecs++;
+    const m = Math.floor(elapsedSecs/60), s = elapsedSecs%60;
+    elapsedEl.textContent = m+':'+String(s).padStart(2,'0');
+  }
+
+  startBtn.addEventListener('click', function(){
+    running = !running;
+    if(running){
+      startBtn.textContent = 'Pause';
+      renderPhase();
+      tickTimer = setInterval(tick, 1000);
+    } else {
+      startBtn.textContent = 'Start';
+      clearInterval(tickTimer);
+    }
+  });
+
+  resetBtn.addEventListener('click', function(){
+    running=false; clearInterval(tickTimer);
+    startBtn.textContent='Start';
+    phaseIdx=0; cycles=0; elapsedSecs=0;
+    cyclesEl.textContent='0'; elapsedEl.textContent='0:00';
+    phaseEl.textContent='Ready'; countEl.innerHTML='&nbsp;';
+    ring.style.transition='transform .4s ease';
+    ring.style.transform='scale(0.62)';
+  });
+})();
+
+/* ================= GROUNDING 5-4-3-2-1 ================= */
+(function(){
+  const senses = [
+    {n:5, label:'Things you can see', icon:'👁', ph:'a crack in the ceiling'},
+    {n:4, label:'Things you can touch', icon:'✋', ph:'the fabric of your sleeve'},
+    {n:3, label:'Things you can hear', icon:'👂', ph:'a fan humming'},
+    {n:2, label:'Things you can smell', icon:'👃', ph:'coffee, fresh air'},
+    {n:1, label:'Thing you can taste', icon:'👅', ph:'mint, coffee, nothing at all'},
+  ];
+  const wrap = document.getElementById('groundSteps');
+  const fill = document.getElementById('groundFill');
+  const doneMsg = document.getElementById('groundDone');
+  let values = senses.map(s => new Array(s.n).fill(''));
+  const totalInputs = senses.reduce((a,s)=>a+s.n,0);
+
+  function updateProgress(){
+    const filled = values.reduce((a,arr)=>a+arr.filter(v=>v.trim().length>0).length, 0);
+    const pct = Math.round((filled/totalInputs)*100);
+    fill.style.width = pct+'%';
+    doneMsg.style.display = (filled === totalInputs) ? 'block' : 'none';
+  }
+
+  function render(){
+    wrap.innerHTML = '';
+    senses.forEach((s, i) => {
+      const step = document.createElement('div');
+      step.className = 'ground-step';
+      const filledCount = values[i].filter(v=>v.trim().length>0).length;
+      const head = document.createElement('div');
+      head.className = 'ground-step-head';
+      head.innerHTML = '<div class="ground-step-title">'+s.icon+'  '+s.label+'</div><div class="ground-step-count mono">'+filledCount+' / '+s.n+'</div>';
+      const row = document.createElement('div');
+      row.className = 'input-row';
+      for(let p=0; p<s.n; p++){
+        const inputWrap = document.createElement('div');
+        inputWrap.className = 'ground-input-wrap';
+        const num = document.createElement('span');
+        num.className = 'ground-input-num mono';
+        num.textContent = (p+1)+'.';
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'ground-input';
+        input.placeholder = s.ph;
+        input.value = values[i][p];
+        if(values[i][p].trim().length>0) input.classList.add('filled');
+        input.addEventListener('input', (e) => {
+          values[i][p] = e.target.value;
+          input.classList.toggle('filled', e.target.value.trim().length>0);
+          const countEl = head.querySelector('.ground-step-count');
+          countEl.textContent = values[i].filter(v=>v.trim().length>0).length + ' / ' + s.n;
+          updateProgress();
+        });
+        inputWrap.appendChild(num);
+        inputWrap.appendChild(input);
+        row.appendChild(inputWrap);
+      }
+      step.appendChild(head);
+      step.appendChild(row);
+      wrap.appendChild(step);
+    });
+    updateProgress();
+  }
+
+  document.getElementById('groundReset').addEventListener('click', () => {
+    values = senses.map(s => new Array(s.n).fill(''));
+    render();
+  });
+
+  render();
+})();
+
+/* ================= WAVE / URGE SURFING ================= */
+(function(){
+  const timerEl = document.getElementById('waveTimer');
+  const promptEl = document.getElementById('wavePrompt');
+  const fillEl = document.getElementById('waveFill');
+  const startBtn = document.getElementById('waveStart');
+  const resetBtn = document.getElementById('waveReset');
+  const presetBtns = document.querySelectorAll('.preset-btn');
+
+  const prompts = [
+    "Notice the urge without judging it. Where do you feel it in your body?",
+    "Urges come in waves \u2014 they rise, they peak, they always fall.",
+    "You don't have to fight it or give in. Just watch it, like weather passing.",
+    "Breathe into the feeling. It's uncomfortable, not dangerous.",
+    "Notice if the intensity has shifted at all since you started.",
+    "You're not the urge. You're the one noticing it.",
+    "Stay a little longer. The peak has likely already passed.",
+    "This feeling is temporary. You're still here, still steady."
+  ];
+
+  let totalSecs = 90, secsLeft = 90, running=false, timer=null, promptIdx=0;
+
+  function fmt(s){ const m=Math.floor(s/60), r=s%60; return m+':'+String(r).padStart(2,'0'); }
+
+  function render(){
+    timerEl.textContent = fmt(secsLeft);
+    const pct = ((totalSecs-secsLeft)/totalSecs)*100;
+    fillEl.style.width = pct+'%';
+  }
+
+  presetBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if(running) return;
+      presetBtns.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      totalSecs = parseInt(btn.dataset.secs,10);
+      secsLeft = totalSecs;
+      render();
+    });
+  });
+
+  function tick(){
+    secsLeft--;
+    if(secsLeft % Math.ceil(totalSecs/prompts.length) === 0 && secsLeft>0){
+      promptIdx = (promptIdx+1) % prompts.length;
+      promptEl.textContent = prompts[promptIdx];
+    }
+    if(secsLeft <= 0){
+      clearInterval(timer);
+      running=false;
+      startBtn.textContent='Start';
+      promptEl.textContent = "The wave has passed. Notice how you feel right now.";
+      secsLeft = 0;
+    }
+    render();
+  }
+
+  startBtn.addEventListener('click', () => {
+    running = !running;
+    if(running){
+      startBtn.textContent='Pause';
+      if(secsLeft===0) secsLeft=totalSecs;
+      promptEl.textContent = prompts[0];
+      promptIdx=0;
+      timer = setInterval(tick, 1000);
+    } else {
+      startBtn.textContent='Start';
+      clearInterval(timer);
+    }
+  });
+
+  resetBtn.addEventListener('click', () => {
+    running=false; clearInterval(timer);
+    startBtn.textContent='Start';
+    secsLeft = totalSecs; promptIdx=0;
+    promptEl.textContent = "Notice the urge without judging it. Where do you feel it in your body?";
+    render();
+  });
+
+  render();
+})();
+
+/* ================= CRISIS BAR OFFSET ================= */
+(function(){
+  const bar = document.querySelector('.crisis-bar');
+  function sizeOffset(){
+    if(!bar) return;
+    document.body.style.paddingTop = bar.offsetHeight + 'px';
+  }
+  sizeOffset();
+  window.addEventListener('resize', sizeOffset);
+  if(window.ResizeObserver){
+    new ResizeObserver(sizeOffset).observe(bar);
+  }
+})();
+
+/* ================= NAV / VIEW SWITCHING ================= */
+window.__viewRefreshers = {};
+function goToView(key){
+  document.querySelectorAll('.navbtn[data-view]').forEach(b => b.classList.toggle('active', b.dataset.view === key));
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const el = document.getElementById('view-' + key);
+  if(el) el.classList.add('active');
+  if(window.__viewRefreshers[key]) window.__viewRefreshers[key]();
+}
+(function(){
+  const navBtns = document.querySelectorAll('.navbtn[data-view]');
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => goToView(btn.dataset.view));
+  });
+})();
+
+/* ================= COPING SKILLS ACCORDION ================= */
+(function(){
+  const categories = [
+    { name:'Physical & Movement', color:'sky', skills:[
+      'Take deep breaths', 'Do a positive activity', 'Play sports', 'Take a quick walk',
+      'Practice yoga', 'Stand up and stretch', 'Dance', 'Jog in place'
+    ]},
+    { name:'Mindfulness & Relaxation', color:'moss', skills:[
+      'Meditate', 'Close your eyes and relax', 'Sit and relax all your muscles',
+      'Slowly count to ten', 'Take a time out', 'Visualize your favorite place',
+      'Visualize a stop sign', 'Notice 5 things you can see', 'Use a relaxation app',
+      'Listen to nature sounds', 'Get enough sleep'
+    ]},
+    { name:'Creative Expression', color:'clay', skills:[
+      'Draw a picture', 'Color a coloring page', 'Doodle on paper', 'Paint your nails',
+      'Paint with water colors', 'Write a poem', 'Write a story', 'Write a letter',
+      'Write a blog', 'Write down your thoughts', 'Write a positive note', 'Write a list',
+      'Write in a journal', 'Play with clay', 'Build something', 'Play an instrument',
+      'Draw cartoons'
+    ]},
+    { name:'Positive Self-Talk & Mindset', color:'sky', skills:[
+      'Use positive self-talk', 'Say something kind to yourself', 'Say, "I can do this"',
+      'List your positive qualities', 'Make a gratitude list', 'Identify a positive thought',
+      'List 10 positives about you', 'Compliment yourself', 'Keep a positive attitude',
+      'Read inspirational quotes', 'Set a goal', 'Ask yourself, "What do I do?"',
+      'Use an I-statement', 'Identify your emotions'
+    ]},
+    { name:'Social Connection', color:'moss', skills:[
+      'Talk to a friend', 'Talk to an adult', 'Give someone a hug', 'Hug a stuffed animal',
+      'Ask an adult for help', 'Ask for a break', 'Express your feelings to someone',
+      'Tell someone you are thankful for them', 'Smile at others', 'Think about someone you love',
+      'Pet an animal'
+    ]},
+    { name:'Fun & Distraction', color:'clay', skills:[
+      'Do something you love', 'Do something kind', 'Think of something funny',
+      'Think of something happy', 'Play a card game', 'Put a puzzle together',
+      'Watch a good movie', 'Watch a funny video', 'Read a joke book', 'Read a magazine',
+      'Take pictures', 'Rip paper into pieces', 'Blow bubbles', 'Hum your favorite song',
+      'Listen to music', 'Plan a fun trip', 'Garden', 'Chew gum'
+    ]},
+    { name:'Self-Care', color:'sky', skills:[
+      'Drink cold water', 'Drink some tea', 'Eat a healthy snack', 'Cook or bake',
+      'Read a good book', 'Clean something', 'Make your day\u2019s schedule', 'Organize something',
+      'Schedule time for yourself', 'Use a stress ball'
+    ]},
+    { name:'Learning & Focus', color:'moss', skills:[
+      'Hyperfocus on an object', 'Do schoolwork', 'Count to 100', 'Make a list of choices',
+      'Make a list for the future', 'Look at pictures you\u2019ve taken', 'Look at animal pictures',
+      'Smile in the mirror', 'Laugh', 'Think of a pet you love'
+    ]},
+  ];
+
+  const acc = document.getElementById('accordion');
+  categories.forEach((cat) => {
+    const item = document.createElement('div');
+    item.className = 'acc-item';
+
+    const head = document.createElement('button');
+    head.className = 'acc-head';
+    head.innerHTML =
+      '<div class="acc-head-left"><span class="dot '+cat.color+'"></span><span class="acc-title">'+cat.name+'</span></div>' +
+      '<div style="display:flex;align-items:center;gap:8px;">' +
+      '<span class="acc-count mono">'+cat.skills.length+'</span>' +
+      '<svg class="acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>' +
+      '</div>';
+
+    const body = document.createElement('div');
+    body.className = 'acc-body';
+    const inner = document.createElement('div');
+    inner.className = 'acc-body-inner';
+    cat.skills.forEach(skill => {
+      const chip = document.createElement('button');
+      chip.className = 'skill-chip';
+      chip.style.cssText = 'width:100%;border:none;text-align:left;';
+      chip.innerHTML = '<span class="tick"></span><span>'+skill+'</span>';
+      chip.addEventListener('click', () => chip.classList.toggle('checked'));
+      inner.appendChild(chip);
+    });
+    body.appendChild(inner);
+
+    head.addEventListener('click', () => item.classList.toggle('open'));
+
+    item.appendChild(head);
+    item.appendChild(body);
+    acc.appendChild(item);
+  });
+})();
+
+/* ================= CONTROL CHECKLIST ================= */
+(function(){
+  const items = [
+    "How I respond to challenges.",
+    "Who I ask for help.",
+    "When I ask for help.",
+    "Saying I need a break.",
+    "How I act.",
+    "How much effort I put forth.",
+    "Getting enough sleep.",
+    "Completing my responsibilities.",
+    "Using I-statements.",
+    "Saying what I need.",
+    "How much exercise I do.",
+    "Setting my boundaries.",
+    "Respecting other people's boundaries.",
+    "When and if I forgive others.",
+    "How often I smile.",
+    "Owning up to my mistakes.",
+    "When I show empathy.",
+    "Whether or not I accept myself.",
+    "What I focus on in this very moment.",
+    "Focusing on the negatives or positives.",
+    "What goals I create for myself.",
+    "The kind of attitude I have.",
+    "How I relate to my feelings.",
+    "Whether I help someone out or not.",
+    "How I take care of and treat my body.",
+    "Treating others the way I want to be treated.",
+    "When I listen to others.",
+    "How truthful and honest I am.",
+    "When I talk about my feelings.",
+    "Expressing what I hope for.",
+    "How I interpret events.",
+    "When I ignore behavior that annoys me.",
+    "Apologizing when I make a mistake.",
+    "How I \"talk\" to myself.",
+    "If and when I try again.",
+    "Treating others with kindness.",
+    "Treating myself with kindness.",
+    "Saying please and thank you.",
+    "Going outside and enjoying the fresh air.",
+    "How organized or clean I am.",
+    "How I hold my body (like my posture).",
+    "Reminding myself that I am lovable.",
+    "How I show others that I care about them.",
+    "Whether I \"get back up\" after I \"fall down.\"",
+    "When I practice gratitude.",
+    "Whether or not I keep my word.",
+    "What coping strategies I use.",
+    "Whether or not I accept the situation.",
+    "Using mistakes as opportunities for learning.",
+    "When I take mindful breaths."
+  ];
+
+  const list = document.getElementById('ctrlList');
+  if(!list) return;
+  const fill = document.getElementById('ctrlFill');
+  const countEl = document.getElementById('ctrlCount');
+  const resetBtn = document.getElementById('ctrlReset');
+  const scaleGrid = document.getElementById('scaleGrid');
+
+  const CHECK_KEY = 'groundwork_control_checklist';
+  const SCALE_KEY = 'groundwork_control_scale';
+
+  function loadJSON(key, fallback){
+    try{ const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; }catch(e){ return fallback; }
+  }
+  function saveJSON(key, value){ try{ localStorage.setItem(key, JSON.stringify(value)); }catch(e){} }
+
+  let checked = loadJSON(CHECK_KEY, {});
+
+  function updateProgress(){
+    const total = items.length;
+    const done = Object.values(checked).filter(Boolean).length;
+    countEl.textContent = done + ' / ' + total;
+    fill.style.width = (done / total * 100) + '%';
+  }
+
+  items.forEach((text, i) => {
+    const chip = document.createElement('button');
+    chip.className = 'skill-chip' + (checked[i] ? ' checked' : '');
+    chip.style.cssText = 'width:100%;border:none;text-align:left;';
+    chip.innerHTML = '<span class="tick"></span><span>' + text + '</span>';
+    chip.addEventListener('click', () => {
+      checked[i] = !checked[i];
+      chip.classList.toggle('checked', !!checked[i]);
+      saveJSON(CHECK_KEY, checked);
+      updateProgress();
+    });
+    list.appendChild(chip);
+  });
+  updateProgress();
+
+  resetBtn.addEventListener('click', () => {
+    checked = {};
+    saveJSON(CHECK_KEY, checked);
+    list.querySelectorAll('.skill-chip').forEach(c => c.classList.remove('checked'));
+    updateProgress();
+  });
+
+  let scaleVal = loadJSON(SCALE_KEY, null);
+  for(let n = 1; n <= 10; n++){
+    const btn = document.createElement('button');
+    btn.className = 'scale-btn' + (scaleVal === n ? ' selected' : '');
+    btn.textContent = n;
+    btn.addEventListener('click', () => {
+      scaleVal = n;
+      saveJSON(SCALE_KEY, scaleVal);
+      scaleGrid.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    });
+    scaleGrid.appendChild(btn);
+  }
+})();
+
+/* ================= JOURNAL: 366 PROMPTS ================= */
+const PROMPTS = ["What's weighing on you most today, and what's one small piece of it you could set down?", "When did you last feel truly overwhelmed? What helped, even a little?", "If today felt like too much, what's one thing you can let wait until tomorrow?", "Where do you carry stress in your body? What is it trying to tell you?", "What would ‘enough for today’ look like, even if the list isn’t finished?", "Name three things pulling at your attention right now. Which one actually needs you?", "What's the worry you keep circling back to? Write it down and see how it looks on paper.", "What's the worst-case story your mind is telling you right now? How likely is it, really?", "What helps you come back to the present moment when anxiety takes over?", "If your anxiety could talk, what is it trying to protect you from?", "What's one thing that is actually true and steady right now, despite the worry?", "How does your breathing change when you're anxious? What happens if you slow it down?", "What's a decision you're second-guessing today? What did you know when you made it?", "Whose voice is loudest when you doubt yourself? Is it actually telling the truth?", "What's something you did well this week that you haven't given yourself credit for?", "If a friend had your doubts, what would you tell them?", "What would you attempt if you trusted yourself completely, just for today?", "What evidence do you have that you're more capable than you're giving yourself credit for?", "What set you off today, and what was underneath the anger?", "Where do you feel anger land in your body? What does it want you to do?", "What's a time anger protected you or someone you love?", "Is there an old anger you're still carrying that belongs to something else?", "What would it look like to express this anger without it running the show?", "If you let the anger cool for an hour, what would you actually want to say?", "What are you grieving today, even if no one else would call it a loss?", "What do you miss most, and what would you want that person or thing to know?", "Grief doesn't follow a schedule. What does it look like for you today?", "What's one memory you want to hold onto on purpose?", "What has this loss taught you that you didn't ask to learn?", "How can you be gentle with yourself today, in the middle of missing something?", "What's the money worry sitting heaviest on you right now?", "What's one small step you could take this week toward feeling less stuck financially?", "What did you learn about money growing up that still shapes how you feel about it now?", "What's something you have, not money-related, that actually makes you feel secure?", "If the money stress eased for one day, what would you do differently?", "What's one financial win, however small, you can acknowledge from this month?", "What part of work is draining you most right now?", "What would it look like to do good work without sacrificing yourself for it?", "What's one boundary at work you've been avoiding setting?", "When did work last feel meaningful, even briefly? What made it that way?", "What's something at work you're proud of that no one else noticed?", "If today at work only had to be ‘good enough,’ what would you skip?", "What does burnout feel like in your body right now?", "What have you been giving to everyone else that you haven't given to yourself?", "What's one thing you could take off your plate this week, even temporarily?", "When did you last feel rested? What was different about that day?", "What would ‘recovering’ actually look like for you, not just ‘pushing through’?", "What's a warning sign your body gives you before burnout hits? Did you notice it this time?", "What's the disagreement you're still turning over in your mind?", "What did you need in that conflict that you didn't ask for directly?", "What's one thing you could own in this conflict, even if it's small?", "If you could say one true thing to that person without it turning into a fight, what would it be?", "What does this conflict tell you about what matters most to you?", "What would repair look like here, even if it's imperfect?", "When did loneliness show up today, and what did you do with it?", "Who is one person you could reach out to, even with something small?", "What does loneliness feel like for you, physically and emotionally?", "What's one way you've connected with yourself today, even alone?", "What would it look like to let someone in, just a little, this week?", "Is there a difference between being alone and being lonely for you right now?", "What's the family dynamic that's been on your mind lately?", "What role do you tend to play in your family, and does it still fit you?", "What's something you wish a family member understood about you right now?", "What's one thing you appreciate about your family, even amid the tension?", "Where do you need to set a boundary with family, even lovingly?", "What pattern from your family of origin are you trying to do differently?", "What's the hardest part of parenting today?", "What do you wish you'd done differently with your kid this week, and what will you do instead next time?", "What's one moment of connection with your child you can hold onto from today?", "What are you most afraid of getting wrong as a parent?", "What's something your child taught you recently, even without meaning to?", "How can you show yourself the same grace you try to give your kids?", "What's a boundary you need to set but have been putting off?", "Where did you say yes today when you wanted to say no?", "What's one small boundary you held today, even if no one noticed?", "What happens in your body when you're about to say no?", "Whose approval are you chasing at the cost of your own limits?", "What would it feel like to protect your energy today like it actually matters?", "Is there someone you're holding onto anger toward that's costing you more than them?", "What would forgiveness look like here, not for them, but for you?", "Is there something you need to forgive yourself for?", "What's the story you keep retelling yourself about what happened?", "What would it take to set this down, even a little, today?", "Forgiveness doesn't mean forgetting. What would remembering with less weight look like?", "What's a shame you've been carrying quietly?", "Whose voice does that shame sound like? Is it even still true?", "What would it feel like to say the shameful thing out loud to someone safe?", "What's the difference between what you did and who you are?", "What would you say to someone else who felt this same shame?", "What's one way you can be kind to yourself about this today?", "What guilt are you carrying today, and is it yours to carry?", "What would making amends look like here, if it's possible?", "Is this guilt pointing you toward a change, or just punishing you?", "What's something you did today that you can actually be proud of?", "What would it look like to learn from this without staying stuck in it?", "If you've already apologized or made it right, what's stopping you from letting it go?", "What are you avoiding because you're afraid of failing at it?", "What would you attempt if failure wasn't a measure of your worth?", "What's a failure from your past that actually taught you something valuable?", "What's the smallest version of the scary thing you could try today?", "Who taught you that failing meant something was wrong with you?", "What would ‘good enough for now’ look like on this?", "What are you holding to an impossible standard right now?", "What would happen if you let this be done instead of perfect?", "Whose expectations are you actually trying to meet?", "What's one thing you did today that was good, even if it wasn't perfect?", "What did perfectionism cost you today?", "What would it feel like to finish something and call it enough?", "Who have you been comparing yourself to lately, and how does it feel?", "What part of your life would you actually not trade for someone else's?", "What's something you're proud of that has nothing to do with anyone else's path?", "What would it feel like to run your own race today?", "What's a comparison trap you fell into today, and what's a truer story?", "What do you have now that younger you would be amazed by?", "What's changing right now that feels hard to hold?", "What's one thing that's staying steady, even while everything else shifts?", "What would it look like to trust the process, even without knowing the outcome?", "What's something uncertain that also holds possibility?", "How have you handled change well before? What did you lean on?", "What's one small thing you can control today, even amid the uncertainty?", "Where is your patience being tested most right now?", "What are you rushing that actually needs more time?", "What would it look like to wait without resenting the waiting?", "What's something worth being patient for in your life right now?", "When has patience paid off for you before?", "What's one way you can be patient with yourself today?", "Who or what is hard to trust right now, and why?", "What would it take to trust yourself a little more today?", "Has someone broken your trust recently? What do you need to feel safe again?", "What's a time trust was rebuilt in your life? How did that happen?", "What's one small way you can extend trust today, even cautiously?", "What does trusting yourself actually look like in practice?", "What let you down today, big or small?", "What did you expect that didn't happen? How are you making sense of that?", "What's one thing that went right today, even if the bigger thing didn't?", "How do you usually respond to disappointment? Is that serving you?", "What would it look like to feel the letdown without spiraling into it?", "What's still possible, even with this disappointment?", "What's making it hard to get moving today?", "What's one tiny step that would count as progress right now?", "When do you usually feel most motivated? What's different about those times?", "What are you doing this for, underneath the task itself?", "What would it look like to start even without feeling ready?", "What's one thing you've followed through on recently, even when it was hard?", "What are you trying to control that isn't actually yours to control?", "What would it feel like to let go of the outcome, just for today?", "What's one thing you do have control over right now?", "Where does the need for control come from for you?", "What happens in your body when things feel out of your hands?", "What would trust look like here instead of control?", "What are you still holding onto that isn't serving you anymore?", "What would it feel like in your body to set this down?", "What's one small way you can practice letting go today?", "What are you afraid would happen if you let this go?", "What's something you've already let go of that you're proud of?", "What would you make room for if this weren't taking up space?", "What would you say to a friend going through what you're going through right now?", "Where have you been hard on yourself today that you could soften?", "What does self-compassion actually feel like in your body?", "What's one kind thing you can do for yourself today?", "What would it look like to treat your mistakes the way you'd treat a friend's?", "What do you need to hear right now that you can tell yourself?", "What gave your day meaning, even in a small way?", "What do you want your life to be about, underneath the daily tasks?", "What's something you value that you haven't made room for lately?", "When do you feel most like yourself?", "What would you regret not doing if today were your only shot at it?", "What's one thing you did today that mattered, even if no one saw it?", "What decision have you been putting off?", "What's the fear underneath your hesitation on this?", "What would you decide if you trusted your own judgment fully?", "What's one piece of information that would make this decision easier?", "What decision are you glad you made, even if it was hard at the time?", "What's the cost of staying undecided on this?", "What is your body asking for today that you haven't given it?", "What's been hard about your health lately, physically or mentally?", "What's one thing your body has done for you today that you can appreciate?", "What would taking your health seriously look like this week, in one small step?", "What fears come up around your health, and what helps when they do?", "What's a way you can rest today without guilt?", "What's your relationship with your body like today?", "What has your body carried you through that you can be grateful for?", "Where did you learn the standards you hold your body to?", "What would it feel like to speak to your body with more kindness?", "What's one thing your body lets you do that you don't always notice?", "What would freedom from body comparison feel like, even for one day?", "How did you sleep last night, and how is it showing up today?", "What's getting in the way of real rest for you lately?", "What would it take to protect your sleep tonight?", "What does rest look like for you beyond just sleep?", "What's one thing keeping your mind busy at night that you could write down instead of carrying?", "What would it feel like to give yourself permission to rest without earning it first?", "What triggered the urge today, and what did you notice in your body?", "What did you do instead of acting on the urge, even if it was small?", "What's the urge trying to soothe or avoid right now?", "Who or what could you reach out to the next time an urge hits?", "What would you tell someone else riding out the same urge right now?", "What's one thing you're proud of about how you handled today?", "What triggered you today? What did it remind you of?", "What's your body's early warning sign that a trigger is building?", "What helped you get through the trigger, even a little?", "What would it look like to plan ahead for this trigger next time?", "What's one thing that's different about you now compared to the last time this trigger hit?", "What do you need after being triggered, to feel steady again?", "What's one thing about your recovery you're proud of today?", "How have you changed since you started this path?", "What's still hard, even with the progress you've made?", "Who or what has helped you stay the course lately?", "What would you tell yourself on day one if you could?", "What milestone, big or small, deserves to be acknowledged today?", "What's making relapse feel closer than usual right now?", "What's one thing that's kept you steady before that you can lean on now?", "What would you need to feel safer today?", "Who's in your corner that you can reach out to right now?", "What's the difference between a slip in thinking and a decision you haven't made yet?", "What's one honest thing you need to say out loud to someone today?", "How connected do you feel to others today?", "What's kept you from reaching out lately?", "What's one small way you could let someone in today?", "What does isolation protect you from, and what does it cost you?", "Who do you miss being close to?", "What would it look like to take one step toward connection today?", "What do you need help with that you haven't asked for?", "What stops you from asking for help when you need it?", "Who is someone you trust enough to ask for support?", "What would it feel like to receive help without feeling like a burden?", "What's a time asking for help actually made things better?", "What's one small ask you could make today?", "What's one thing you want to be true a month from now?", "What's a goal you've been avoiding setting because it feels too big?", "What's the smallest first step toward something you want?", "What would it look like to aim for progress instead of perfection?", "What goal from the past are you proud of reaching?", "What's one thing you can do today that your future self will thank you for?", "What criticism is sitting with you today, fair or not?", "What part of that criticism is true, and what part isn't yours to carry?", "How do you usually respond when someone criticizes you? Is that working for you?", "What would it look like to hear feedback without it defining you?", "What's something you've improved because of hard feedback in the past?", "What do you actually believe about yourself, separate from what others say?", "What are you jealous of right now, and what does that tell you about what you want?", "What would it look like to want something for yourself without resenting someone else for having it?", "What's something you have that someone else might be jealous of?", "What need is underneath this jealousy?", "What's one step you could take toward something you actually want?", "How does jealousy usually show up for you, and what helps it pass?", "Is there an apology you owe someone, or one you're waiting to receive?", "What would a real apology from you sound like here?", "What's stopping you from saying you're sorry?", "What would it feel like to accept an apology, even an imperfect one?", "What's a time an apology actually repaired something for you?", "What do you need to forgive yourself for today?", "What's one thing you did for yourself today, even something small?", "What does your body or mind need right now that you've been ignoring?", "What would taking care of yourself look like today, without it feeling selfish?", "What's one thing you could remove from today to make space to breathe?", "What's a form of self-care that actually works for you, not just what you're ‘supposed’ to do?", "What's one thing you can do in the next hour that's just for you?", "Where did you notice something bigger than yourself today?", "What's your faith or spiritual life carrying you through right now?", "What questions are you sitting with about your beliefs lately?", "What would surrender look like for you today, in whatever way that means to you?", "What's one thing you're grateful for that feels like grace?", "Where do you feel most connected to something greater than yourself?", "What's a regret that keeps resurfacing for you?", "What would you do differently if you could, and what stops you from doing that now?", "What has this regret taught you that you can use going forward?", "What would it look like to make peace with this, even without changing it?", "Who were you when that happened, and how are you different now?", "What's one way you can use this regret to guide a better choice today?", "What about the future is weighing on you most right now?", "What's one thing you actually know for certain right now, today?", "What would it feel like to focus only on the next right step?", "What's a future worry that hasn't come true before, that you can let ease a little?", "What would you tell yourself a year from now to hear right now?", "What's something hopeful about the future you can hold onto, even a small thing?", "Where is the balance off between work and the rest of your life right now?", "What would it look like to protect time for yourself this week?", "What's something outside of work that deserves more of your attention?", "What's one boundary you could set to protect your time off?", "What did you do today that had nothing to do with productivity?", "What would ‘enough’ work look like today, so there's room for the rest of your life?", "What social situation is weighing on you right now?", "What's the worst-case story your mind tells you before social situations?", "What helped you get through a hard social moment before?", "What would it feel like to show up imperfectly and still belong?", "What's one small social step you could take today, even a text?", "What do you actually enjoy about connecting with others, underneath the anxiety?", "How did screens or social media affect your mood today?", "What would it feel like to take a break from comparison for a day?", "What's something real in your life that a highlight reel wouldn't show?", "What's one thing you could do today instead of scrolling?", "What do you actually want more of in your life, outside of a screen?", "What would it look like to be more present today than plugged in?", "What's the system-related stress weighing on you right now, insurance, legal, or medical?", "What's one small step you can take this week to move this forward?", "Who could help you navigate this that you haven't asked yet?", "What's within your control here, even if the bigger system isn't?", "What would it feel like to hand this off, even partially, to someone else?", "What's one thing you've navigated successfully before that you can lean on now?", "What feelings come up for you about getting older?", "What's something about aging you actually appreciate?", "What do you want to make sure you do while you still can?", "What wisdom have you earned that younger you didn't have?", "What's something your body does differently now, and how are you adjusting?", "What legacy do you want to be building right now?", "What transition are you in the middle of right now?", "What are you grieving about what's ending, even if the new thing is good?", "What's one thing that's exciting about what's ahead, even amid the uncertainty?", "What would it look like to give yourself grace during this in-between time?", "What's helped you through transitions before?", "What do you need to let go of to fully step into what's next?", "What's something hard you've already survived that you can draw strength from?", "What does resilience look like for you today, not as toughness, but as staying present?", "What's one small way you showed up for yourself today, even when it was hard?", "Who or what has helped build your resilience over the years?", "What's a challenge that made you stronger, even if you wouldn't choose it again?", "What's one thing you're capable of that you didn't know before this struggle?", "Who are you becoming right now, separate from who you used to be?", "What part of your identity feels most solid right now?", "What's a label others have put on you that you're ready to set down?", "What do you want to be known for?", "What's something true about you that has nothing to do with your struggles?", "How have you changed in the last year that you're proud of?", "What's giving you a little hope today, even something small?", "What would you tell someone who needed hope right now?", "What's one thing you're looking forward to, even far off?", "What's a time hope carried you through something hard before?", "What would it look like to hold hope and hard feelings at the same time?", "What's one seed of something good you can plant today?", "What's one thing you're grateful for today, even in a hard week?", "What's something ordinary today that you could notice with more appreciation?", "Who is someone you're grateful for right now, and why?", "What's something about your own strength you're grateful for?", "What's a small comfort you had today that you can be thankful for?", "What would it feel like to hold gratitude and struggle in the same hand?", "What conflict needs a conversation you've been avoiding?", "What would it look like to approach this conflict with curiosity instead of defense?", "What do you actually want the outcome of this conflict to be?", "What's one thing you could say that would move this toward repair?", "What's a conflict you resolved well before? What made that possible?", "What do you need to feel safe enough to have this conversation?", "What would it look like to be honest about how you're really doing today?", "What are you protecting by staying guarded right now?", "Who is safe enough to be vulnerable with today?", "What's something true you've been afraid to say out loud?", "What would it feel like to let someone see you struggling?", "What's one small way you can practice openness today?", "What are you proud of that you haven't said out loud?", "Where might pride be getting in the way of asking for help?", "What's something you're humbled by lately?", "What would it look like to hold both confidence and humility today?", "What's an accomplishment you've downplayed that deserves more credit?", "What's something you need to admit you don't have figured out?", "What's stopping you from resting without guilt today?", "What would it feel like to see rest as productive, not lazy?", "Who taught you that rest had to be earned?", "What's one thing you can rest from today, even briefly?", "What does your body feel like after real rest versus just stopping?", "What would you tell a friend who felt guilty for resting?", "What's one small win from today that's easy to overlook?", "What did you do today that took more effort than it looked like from outside?", "What's a tiny thing that went right today?", "What's something you almost didn't do today, but did anyway?", "What's one moment today you'd like to remember?", "What's a small piece of progress you can acknowledge, even if the big picture still feels hard?"];
+
+/* ================= JOURNAL LOGIC ================= */
+(function(){
+  const dateEl = document.getElementById('journalDate');
+  const promptTextEl = document.getElementById('journalPromptText');
+  const promptedTA = document.getElementById('promptedTextarea');
+  const freestyleTA = document.getElementById('freestyleTextarea');
+  const promptedWC = document.getElementById('promptedWordcount');
+  const freestyleWC = document.getElementById('freestyleWordcount');
+  const promptedSave = document.getElementById('promptedSave');
+  const freestyleSave = document.getElementById('freestyleSave');
+  const promptedFlash = document.getElementById('promptedFlash');
+  const freestyleFlash = document.getElementById('freestyleFlash');
+  const shuffleBtn = document.getElementById('promptShuffle');
+  const entriesList = document.getElementById('entriesList');
+  const promptedCard = document.getElementById('promptedCard');
+  const freestyleCard = document.getElementById('freestyleCard');
+  const segBtns = document.querySelectorAll('.seg-btn');
+
+  const STORAGE_KEY = 'groundwork_journal_entries';
+  let storageAvailable = true;
+
+  function loadEntries(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return [];
+      const parsed = JSON.parse(raw);
+      return parsed.map(e => ({ ...e, time: new Date(e.time) }));
+    } catch(err){
+      storageAvailable = false;
+      console.warn('Groundwork: local storage unavailable, entries will not persist.', err);
+      return [];
+    }
+  }
+
+  function persistEntries(){
+    if(!storageAvailable) return;
+    try{
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+    } catch(err){
+      storageAvailable = false;
+      console.warn('Groundwork: could not save to local storage.', err);
+    }
+  }
+
+  let entries = loadEntries();
+  let currentPromptIdx = 0;
+
+  function dayOfYear(d){
+    const start = new Date(d.getFullYear(), 0, 0);
+    const diff = d - start;
+    return Math.floor(diff / 86400000);
+  }
+
+  function formatDate(d){
+    return d.toLocaleDateString(undefined, { weekday:'long', month:'long', day:'numeric' });
+  }
+
+  function wordCount(text){
+    const t = text.trim();
+    return t.length === 0 ? 0 : t.split(/\s+/).length;
+  }
+
+  function loadTodayPrompt(){
+    const now = new Date();
+    currentPromptIdx = (dayOfYear(now) - 1) % PROMPTS.length;
+    dateEl.textContent = formatDate(now);
+    promptTextEl.textContent = PROMPTS[currentPromptIdx];
+  }
+
+  shuffleBtn.addEventListener('click', () => {
+    let next;
+    do { next = Math.floor(Math.random() * PROMPTS.length); } while (next === currentPromptIdx);
+    currentPromptIdx = next;
+    promptTextEl.textContent = PROMPTS[currentPromptIdx];
+  });
+
+  promptedTA.addEventListener('input', () => {
+    promptedWC.textContent = wordCount(promptedTA.value) + ' words';
+  });
+  freestyleTA.addEventListener('input', () => {
+    freestyleWC.textContent = wordCount(freestyleTA.value) + ' words';
+  });
+
+  function flash(el){
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 1800);
+  }
+
+  function renderEntries(){
+    if(entries.length === 0){
+      entriesList.innerHTML = '<div class="entries-empty">Entries you save will show up here.</div>';
+      return;
+    }
+    entriesList.innerHTML = '';
+    entries.slice().reverse().forEach(entry => {
+      const item = document.createElement('div');
+      item.className = 'entry-item';
+      const time = entry.time.toLocaleTimeString(undefined, {hour:'numeric', minute:'2-digit'});
+      let promptRef = '';
+      if(entry.type === 'prompted'){
+        promptRef = '<div class="entry-prompt-ref">\u201C' + entry.prompt + '\u201D</div>';
+      }
+      item.innerHTML =
+        '<div class="entry-head">' +
+          '<span class="entry-badge ' + entry.type + '">' + (entry.type === 'prompted' ? 'Prompted' : 'Freestyle') + '</span>' +
+          '<span class="entry-time mono">' + time + '</span>' +
+        '</div>' +
+        promptRef +
+        '<div class="entry-text">' + entry.text.replace(/</g,'&lt;') + '</div>';
+      entriesList.appendChild(item);
+    });
+  }
+
+  promptedSave.addEventListener('click', () => {
+    const text = promptedTA.value.trim();
+    if(!text) return;
+    entries.push({ type:'prompted', prompt: PROMPTS[currentPromptIdx], text, time: new Date() });
+    persistEntries();
+    promptedTA.value = '';
+    promptedWC.textContent = '0 words';
+    flash(promptedFlash);
+    renderEntries();
+  });
+
+  freestyleSave.addEventListener('click', () => {
+    const text = freestyleTA.value.trim();
+    if(!text) return;
+    entries.push({ type:'freestyle', text, time: new Date() });
+    persistEntries();
+    freestyleTA.value = '';
+    freestyleWC.textContent = '0 words';
+    flash(freestyleFlash);
+    renderEntries();
+  });
+
+  segBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      segBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if(btn.dataset.mode === 'prompted'){
+        promptedCard.style.display = '';
+        freestyleCard.style.display = 'none';
+      } else {
+        promptedCard.style.display = 'none';
+        freestyleCard.style.display = '';
+      }
+    });
+  });
+
+  loadTodayPrompt();
+  renderEntries();
+})();
+
+/* ================= GRATITUDE ================= */
+(function(){
+  const STORAGE_KEY = 'groundwork_gratitude_entries';
+  let storageAvailable = true;
+
+  function todayKey(d){
+    const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), day = String(d.getDate()).padStart(2,'0');
+    return y+'-'+m+'-'+day;
+  }
+
+  function loadAll(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch(err){
+      storageAvailable = false;
+      console.warn('Groundwork: local storage unavailable for gratitude entries.', err);
+      return {};
+    }
+  }
+
+  function persistAll(data){
+    if(!storageAvailable) return;
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+    catch(err){ storageAvailable = false; console.warn('Groundwork: could not save gratitude entries.', err); }
+  }
+
+  function normalize(s){
+    return s.trim().toLowerCase().replace(/[.!?]+$/,'');
+  }
+
+  const inputsWrap = document.getElementById('gratInputs');
+  const fill = document.getElementById('gratFill');
+  const doneMsg = document.getElementById('gratDone');
+  const dateSub = document.getElementById('gratDateSub');
+  const saveBtn = document.getElementById('gratSave');
+  const flashEl = document.getElementById('gratFlash');
+  const historyEl = document.getElementById('gratHistory');
+
+  let allEntries = loadAll();
+  const today = new Date();
+  const key = todayKey(today);
+  let values = (allEntries[key] && allEntries[key].length === 5) ? allEntries[key].slice() : ['', '', '', '', ''];
+
+  function flatPastEntries(excludeKey){
+    const out = [];
+    Object.keys(allEntries).forEach(k => {
+      if(k === excludeKey) return;
+      (allEntries[k]||[]).forEach(text => {
+        if(text && text.trim()) out.push({ date:k, text });
+      });
+    });
+    return out;
+  }
+
+  function findDuplicate(text, idx){
+    const norm = normalize(text);
+    if(!norm) return null;
+    // check other fields filled in today first
+    for(let i=0;i<values.length;i++){
+      if(i===idx) continue;
+      if(normalize(values[i]) === norm) return { where:'today' };
+    }
+    // check past saved days
+    const past = flatPastEntries(key);
+    for(const entry of past){
+      if(normalize(entry.text) === norm) return { where:'past', date: entry.date };
+    }
+    return null;
+  }
+
+  function formatDateLabel(k){
+    const [y,m,d] = k.split('-').map(Number);
+    const dt = new Date(y, m-1, d);
+    return dt.toLocaleDateString(undefined, { month:'short', day:'numeric', year: (y !== today.getFullYear() ? 'numeric' : undefined) });
+  }
+
+  function updateProgress(){
+    const filled = values.filter(v => v.trim().length>0).length;
+    const pct = Math.round((filled/5)*100);
+    fill.style.width = pct+'%';
+    doneMsg.style.display = (filled === 5) ? 'block' : 'none';
+  }
+
+  function render(){
+    inputsWrap.innerHTML = '';
+    dateSub.textContent = 'List 5 things you\u2019re grateful for today \u2014 ' + today.toLocaleDateString(undefined,{weekday:'long', month:'long', day:'numeric'}) + '.';
+    values.forEach((val, i) => {
+      const row = document.createElement('div');
+      row.className = 'grat-row';
+      const wrap = document.createElement('div');
+      wrap.className = 'grat-input-wrap';
+      const num = document.createElement('span');
+      num.className = 'grat-num mono';
+      num.textContent = (i+1)+'.';
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'grat-input';
+      input.placeholder = 'Something you\u2019re grateful for...';
+      input.value = val;
+      const warning = document.createElement('div');
+      warning.className = 'grat-dup-warning';
+
+      function refreshDupState(){
+        const dup = findDuplicate(input.value, i);
+        input.classList.toggle('filled', input.value.trim().length>0 && !dup);
+        input.classList.toggle('dup', !!dup);
+        if(dup){
+          warning.classList.add('show');
+          warning.textContent = dup.where === 'today'
+            ? 'Already on today\u2019s list \u2014 try to think of something else.'
+            : 'You noted this on ' + formatDateLabel(dup.date) + '. Try to find something new for today.';
+        } else {
+          warning.classList.remove('show');
+          warning.textContent = '';
+        }
+      }
+
+      input.addEventListener('input', (e) => {
+        values[i] = e.target.value;
+        refreshDupState();
+        updateProgress();
+      });
+
+      refreshDupState();
+      wrap.appendChild(num);
+      wrap.appendChild(input);
+      row.appendChild(wrap);
+      row.appendChild(warning);
+      inputsWrap.appendChild(row);
+    });
+    updateProgress();
+  }
+
+  function renderHistory(){
+    const keys = Object.keys(allEntries).filter(k => k !== key && (allEntries[k]||[]).some(t=>t && t.trim())).sort().reverse();
+    if(keys.length === 0){
+      historyEl.innerHTML = '<div class="entries-empty">Days you\u2019ve saved will show up here.</div>';
+      return;
+    }
+    historyEl.innerHTML = '';
+    keys.forEach(k => {
+      const item = document.createElement('div');
+      item.className = 'grat-history-item';
+      const dateEl = document.createElement('div');
+      dateEl.className = 'grat-history-date mono';
+      dateEl.textContent = formatDateLabel(k);
+      const list = document.createElement('ul');
+      list.className = 'grat-history-list';
+      (allEntries[k]||[]).filter(t=>t && t.trim()).forEach(t => {
+        const li = document.createElement('li');
+        li.textContent = t;
+        list.appendChild(li);
+      });
+      item.appendChild(dateEl);
+      item.appendChild(list);
+      historyEl.appendChild(item);
+    });
+  }
+
+  saveBtn.addEventListener('click', () => {
+    allEntries[key] = values.slice();
+    persistAll(allEntries);
+    const flash = flashEl;
+    flash.classList.add('show');
+    setTimeout(() => flash.classList.remove('show'), 1800);
+    renderHistory();
+  });
+
+  render();
+  renderHistory();
+})();
+
+/* ================= RESOURCES ================= */
+(function(){
+  const zipInput = document.getElementById('resZip');
+  const locateBtn = document.getElementById('resLocate');
+  const statusEl = document.getElementById('resStatus');
+  const cardsWrap = document.getElementById('resCards');
+
+  const CATEGORIES = [
+    {
+      key:'crisis', color:'clay',
+      title:'Walk-In Crisis Centers',
+      desc:'Local crisis centers and same-day mental health crisis services near you.',
+      buildUrl: zip => 'https://findtreatment.gov/locator?sAddr='+zip+'&sType=mh&submit=Go',
+      extra: { label:'988 Crisis Center Directory', url:'https://988lifeline.org/our-crisis-centers/' }
+    },
+    {
+      key:'therapists', color:'sky',
+      title:'Therapists & Psychologists',
+      desc:'Licensed therapists, counselors, and psychologists you can search by insurance and specialty.',
+      buildUrl: zip => 'https://www.psychologytoday.com/us/therapists/'+zip,
+    },
+    {
+      key:'behavioral', color:'moss',
+      title:'Behavioral Health Centers',
+      desc:'Outpatient clinics and community mental health centers offering ongoing care.',
+      buildUrl: zip => 'https://findtreatment.gov/locator?sAddr='+zip+'&sType=mh&submit=Go',
+    },
+    {
+      key:'support', color:'amber',
+      title:'Support Groups (NAMI)',
+      desc:'Free peer support groups and education through your local NAMI affiliate.',
+      buildUrl: () => 'https://www.nami.org/find-your-local-nami/',
+      noZipNeeded:true,
+    },
+    {
+      key:'food', color:'moss',
+      title:'Food Pantries',
+      desc:'Emergency food assistance and pantries near you.',
+      buildUrl: zip => 'https://findhelp.org/search/text?language=en&postal='+zip+'&term=food%20pantry',
+    },
+    {
+      key:'clothing', color:'clay',
+      title:'Clothing Assistance',
+      desc:'Free or low-cost clothing closets and clothing banks.',
+      buildUrl: zip => 'https://findhelp.org/search/text?language=en&postal='+zip+'&term=clothing',
+    },
+    {
+      key:'211', color:'sky',
+      title:'General Help (211)',
+      desc:'A free helpline that connects you to housing, utilities, food, and other local support &mdash; call anytime.',
+      buildUrl: zip => 'https://findhelp.org/search/text?language=en&postal='+zip+'&term=basic%20needs',
+      phone: 'tel:211',
+    },
+  ];
+
+  function isValidZip(z){ return /^\d{5}$/.test(z); }
+
+  function render(){
+    const zip = zipInput.value.trim();
+    const valid = isValidZip(zip);
+    cardsWrap.innerHTML = '';
+    CATEGORIES.forEach(cat => {
+      const card = document.createElement('div');
+      card.className = 'res-card';
+      const canUse = cat.noZipNeeded || valid;
+      const href = cat.noZipNeeded ? cat.buildUrl() : (valid ? cat.buildUrl(zip) : '#');
+      let actionsHtml = '<a class="res-btn primary" style="background:var(--'+cat.color+'-deep);" href="'+href+'" target="_blank" rel="noopener" '+(canUse ? '' : 'aria-disabled="true"')+'>Find near me</a>';
+      if(cat.phone){
+        actionsHtml += '<a class="res-btn secondary" href="'+cat.phone+'">Call 211</a>';
+      }
+      if(cat.extra){
+        actionsHtml += '<a class="res-btn secondary" href="'+cat.extra.url+'" target="_blank" rel="noopener">'+cat.extra.label+'</a>';
+      }
+      card.innerHTML =
+        '<h4><span class="dot '+cat.color+'"></span>'+cat.title+'</h4>' +
+        '<p>'+cat.desc+'</p>' +
+        '<div class="res-actions">'+actionsHtml+'</div>';
+      cardsWrap.appendChild(card);
+    });
+
+    if(zip.length === 0){
+      statusEl.textContent = 'Enter a 5-digit ZIP code to enable the buttons below.';
+    } else if(!valid){
+      statusEl.textContent = 'That doesn\u2019t look like a valid ZIP code yet.';
+    } else {
+      statusEl.textContent = 'Showing links for ZIP '+zip+'.';
+    }
+  }
+
+  zipInput.addEventListener('input', () => {
+    zipInput.value = zipInput.value.replace(/\D/g,'').slice(0,5);
+    render();
+  });
+
+  locateBtn.addEventListener('click', () => {
+    if(!navigator.geolocation){
+      statusEl.textContent = 'Location isn\u2019t available in this browser \u2014 enter your ZIP manually.';
+      return;
+    }
+    statusEl.textContent = 'Finding your location\u2026';
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+      try{
+        const { latitude, longitude } = pos.coords;
+        const resp = await fetch('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+latitude+'&lon='+longitude);
+        const data = await resp.json();
+        const zip = data && data.address && data.address.postcode ? data.address.postcode.slice(0,5) : '';
+        if(zip){
+          zipInput.value = zip;
+          render();
+        } else {
+          statusEl.textContent = 'Couldn\u2019t determine a ZIP code from your location \u2014 enter it manually.';
+        }
+      } catch(err){
+        statusEl.textContent = 'Couldn\u2019t look up your ZIP code \u2014 enter it manually.';
+      }
+    }, () => {
+      statusEl.textContent = 'Location permission denied \u2014 enter your ZIP manually.';
+    });
+  });
+
+  render();
+})();
+
+/* ================= QUIET GAMES: SHARED TOGGLE ================= */
+(function(){
+  const segBtns = document.querySelectorAll('#gameSeg .seg-btn');
+  const cards = {
+    bubbles: document.getElementById('bubblesCard'),
+    sand: document.getElementById('sandCard'),
+    match: document.getElementById('matchCard'),
+    tapbeat: document.getElementById('tapbeatCard'),
+  };
+  segBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      segBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      Object.keys(cards).forEach(k => {
+        cards[k].style.display = (k === btn.dataset.game) ? '' : 'none';
+      });
+      if(btn.dataset.game === 'sand' && window.__sandResize) window.__sandResize();
+    });
+  });
+})();
+
+/* ================= QUIET GAME: TAP TO THE BEAT ================= */
+(function(){
+  const core = document.getElementById('tapbeatCore');
+  const ring1 = document.getElementById('tapbeatRing1');
+  const ring2 = document.getElementById('tapbeatRing2');
+  const zone = document.getElementById('tapbeatZone');
+  const slider = document.getElementById('tapbeatBpmSlider');
+  const valueEl = document.getElementById('tapbeatBpmValue');
+  const presetBtns = document.querySelectorAll('#tapbeatCard .preset-btn');
+  if(!core) return;
+
+  let bpm = 60;
+  let beatInterval = null;
+  let ringToggle = false;
+
+  function setBeatVar(v){
+    document.getElementById('tapbeatCard').style.setProperty('--tapbeat-dur', (60/v).toFixed(3)+'s');
+  }
+
+  function fireRing(){
+    const ring = ringToggle ? ring2 : ring1;
+    ringToggle = !ringToggle;
+    ring.classList.remove('pulse');
+    void ring.offsetWidth;
+    ring.classList.add('pulse');
+  }
+
+  function restartBeat(){
+    core.classList.remove('breathe');
+    void core.offsetWidth;
+    core.classList.add('breathe');
+    if(beatInterval) clearInterval(beatInterval);
+    fireRing();
+    beatInterval = setInterval(fireRing, (60/bpm)*1000);
+  }
+
+  function applyBpm(v, syncSlider){
+    bpm = v;
+    valueEl.textContent = bpm;
+    if(syncSlider !== false) slider.value = bpm;
+    setBeatVar(bpm);
+    restartBeat();
+    presetBtns.forEach(b => b.classList.toggle('active', parseInt(b.dataset.bpm,10) === bpm));
+  }
+
+  zone.addEventListener('pointerdown', (e) => {
+    core.classList.add('tapped');
+    setTimeout(() => core.classList.remove('tapped'), 160);
+
+    const rect = zone.getBoundingClientRect();
+    const x = e.clientX - rect.left, y = e.clientY - rect.top;
+    const ripple = document.createElement('div');
+    ripple.className = 'tapbeat-ripple';
+    const size = Math.min(rect.width, rect.height) * 0.55;
+    ripple.style.width = size+'px';
+    ripple.style.height = size+'px';
+    ripple.style.left = x+'px';
+    ripple.style.top = y+'px';
+    zone.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 650);
+  });
+
+  slider.addEventListener('input', () => applyBpm(parseInt(slider.value,10)));
+  presetBtns.forEach(btn => {
+    btn.addEventListener('click', () => applyBpm(parseInt(btn.dataset.bpm,10)));
+  });
+
+  applyBpm(60);
+})();
+
+/* ================= QUIET GAME 1: BUBBLE WRAP ================= */
+(function(){
+  const grid = document.getElementById('bubbleGrid');
+  const resetBtn = document.getElementById('bubbleReset');
+  const COLS = 7, ROWS = 6;
+  let audioCtx = null;
+
+  function pop(){
+    try{
+      if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const t = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(520 + Math.random()*80, t);
+      osc.frequency.exponentialRampToValueAtTime(120, t + 0.09);
+      gain.gain.setValueAtTime(0.12, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(t); osc.stop(t + 0.11);
+    } catch(err){ /* audio unavailable, silently ignore */ }
+  }
+
+  function build(){
+    grid.innerHTML = '';
+    for(let i=0;i<COLS*ROWS;i++){
+      const b = document.createElement('button');
+      b.className = 'bubble';
+      b.addEventListener('click', () => {
+        if(b.classList.contains('popped')) return;
+        b.classList.add('popped');
+        pop();
+      });
+      grid.appendChild(b);
+    }
+  }
+
+  resetBtn.addEventListener('click', build);
+  build();
+})();
+
+/* ================= QUIET GAME 2: SAND GARDEN ================= */
+(function(){
+  const canvas = document.getElementById('sandCanvas');
+  const hint = document.getElementById('sandHint');
+  const resetBtn = document.getElementById('sandReset');
+  const ctx = canvas.getContext('2d');
+  let drawing = false, lastX = 0, lastY = 0;
+
+  function fillSand(){
+    const w = canvas.width, h = canvas.height;
+    const grad = ctx.createLinearGradient(0,0,0,h);
+    grad.addColorStop(0, '#E8DCC0');
+    grad.addColorStop(1, '#DCCCA4');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0,0,w,h);
+  }
+
+  function resize(){
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    fillSand();
+  }
+  window.__sandResize = resize;
+  window.addEventListener('resize', resize);
+  setTimeout(resize, 50);
+
+  function rakeAt(x, y, px, py){
+    const tineOffsets = [-9, -5, -1.5, 1.5, 5, 9];
+    tineOffsets.forEach(off => {
+      const angle = Math.atan2(y-py, x-px) + Math.PI/2;
+      const ox = Math.cos(angle)*off, oy = Math.sin(angle)*off;
+      ctx.strokeStyle = 'rgba(139,107,63,0.28)';
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(px+ox, py+oy);
+      ctx.lineTo(x+ox, y+oy);
+      ctx.stroke();
+    });
+  }
+
+  function pos(e){
+    const rect = canvas.getBoundingClientRect();
+    const cx = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    const cy = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+    return {x:cx, y:cy};
+  }
+
+  function start(e){
+    drawing = true;
+    hint.style.opacity = '0';
+    const p = pos(e);
+    lastX = p.x; lastY = p.y;
+    e.preventDefault();
+  }
+  function move(e){
+    if(!drawing) return;
+    const p = pos(e);
+    rakeAt(p.x, p.y, lastX, lastY);
+    lastX = p.x; lastY = p.y;
+    e.preventDefault();
+  }
+  function end(){ drawing = false; }
+
+  canvas.addEventListener('pointerdown', start);
+  canvas.addEventListener('pointermove', move);
+  window.addEventListener('pointerup', end);
+  canvas.addEventListener('touchstart', start, {passive:false});
+  canvas.addEventListener('touchmove', move, {passive:false});
+  canvas.addEventListener('touchend', end);
+
+  resetBtn.addEventListener('click', () => {
+    fillSand();
+    hint.style.opacity = '1';
+  });
+})();
+
+/* ================= QUIET GAME 3: SLOW MATCH ================= */
+(function(){
+  const ICONS = ['🍂','🌱','🪨','💧','🌾','🌙','☀️','🍄'];
+  const grid = document.getElementById('matchGrid');
+  const statusEl = document.getElementById('matchStatus');
+  const resetBtn = document.getElementById('matchReset');
+
+  let tiles = [], flippedIdx = [], matchedCount = 0, busy = false;
+
+  function shuffle(arr){
+    for(let i=arr.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [arr[i],arr[j]] = [arr[j],arr[i]];
+    }
+    return arr;
+  }
+
+  function build(){
+    tiles = shuffle([...ICONS, ...ICONS]);
+    flippedIdx = []; matchedCount = 0; busy = false;
+    statusEl.textContent = '0 / ' + ICONS.length + ' pairs';
+    grid.innerHTML = '';
+    tiles.forEach((icon, i) => {
+      const tile = document.createElement('button');
+      tile.className = 'match-tile';
+      tile.innerHTML =
+        '<div class="match-tile-inner">' +
+          '<div class="match-face back">·</div>' +
+          '<div class="match-face front">'+icon+'</div>' +
+        '</div>';
+      tile.addEventListener('click', () => handleClick(i, tile));
+      grid.appendChild(tile);
+    });
+  }
+
+  function handleClick(i, tileEl){
+    if(busy || tileEl.classList.contains('flipped') || tileEl.classList.contains('matched')) return;
+    tileEl.classList.add('flipped');
+    flippedIdx.push({i, tileEl});
+    if(flippedIdx.length === 2){
+      busy = true;
+      const [a,b] = flippedIdx;
+      if(tiles[a.i] === tiles[b.i]){
+        setTimeout(() => {
+          a.tileEl.classList.add('matched');
+          b.tileEl.classList.add('matched');
+          matchedCount++;
+          statusEl.textContent = matchedCount + ' / ' + ICONS.length + ' pairs';
+          flippedIdx = []; busy = false;
+        }, 500);
+      } else {
+        setTimeout(() => {
+          a.tileEl.classList.remove('flipped');
+          b.tileEl.classList.remove('flipped');
+          flippedIdx = []; busy = false;
+        }, 900);
+      }
+    }
+  }
+
+  resetBtn.addEventListener('click', build);
+  build();
+})();
+
+/* ================= SOUNDS ================= */
+(function(){
+  const grid = document.getElementById('soundGrid');
+  const volSlider = document.getElementById('soundVolume');
+  const stopBtn = document.getElementById('soundStop');
+  const binauralPanel = document.getElementById('binauralPanel');
+  const binauralPresets = document.getElementById('binauralPresets');
+
+  let audioCtx = null;
+  let masterGain = null;
+  let currentGen = null;
+  let currentKey = null;
+  let binauralHz = 3;
+  const bufferCache = {};
+
+  function ensureCtx(){
+    if(!audioCtx){
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      masterGain = audioCtx.createGain();
+      masterGain.gain.value = (volSlider.value/100) * 0.9;
+      masterGain.connect(audioCtx.destination);
+    }
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+  }
+
+  volSlider.addEventListener('input', () => {
+    if(masterGain) masterGain.gain.setTargetAtTime((volSlider.value/100)*0.9, audioCtx.currentTime, 0.05);
+  });
+
+  /* ---- noise buffers ---- */
+  function getNoiseBuffer(type){
+    if(bufferCache[type]) return bufferCache[type];
+    const duration = 4, rate = audioCtx.sampleRate, length = rate*duration;
+    const buffer = audioCtx.createBuffer(1, length, rate);
+    const data = buffer.getChannelData(0);
+    if(type === 'white'){
+      for(let i=0;i<length;i++) data[i] = Math.random()*2-1;
+    } else if(type === 'pink'){
+      let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+      for(let i=0;i<length;i++){
+        const w = Math.random()*2-1;
+        b0 = 0.99886*b0 + w*0.0555179;
+        b1 = 0.99332*b1 + w*0.0750759;
+        b2 = 0.96900*b2 + w*0.1538520;
+        b3 = 0.86650*b3 + w*0.3104856;
+        b4 = 0.55000*b4 + w*0.5329522;
+        b5 = -0.7616*b5 - w*0.0168980;
+        const pink = b0+b1+b2+b3+b4+b5+b6+w*0.5362;
+        b6 = w*0.115926;
+        data[i] = pink*0.11;
+      }
+    } else if(type === 'brown'){
+      let last = 0;
+      for(let i=0;i<length;i++){
+        const w = Math.random()*2-1;
+        last = (last + 0.02*w) / 1.02;
+        data[i] = last*3.5;
+      }
+    }
+    bufferCache[type] = buffer;
+    return buffer;
+  }
+
+  function makeNoiseSource(type){
+    const src = audioCtx.createBufferSource();
+    src.buffer = getNoiseBuffer(type);
+    src.loop = true;
+    src.start();
+    return src;
+  }
+
+  /* ---- generators ---- */
+  function genNoise(type, level){
+    const out = audioCtx.createGain(); out.gain.value = 1;
+    const src = makeNoiseSource(type);
+    const g = audioCtx.createGain(); g.gain.value = level;
+    src.connect(g).connect(out);
+    return { output: out, stop(){ try{src.stop();}catch(e){} src.disconnect(); g.disconnect(); } };
+  }
+
+  function genRain(){
+    const out = audioCtx.createGain(); out.gain.value = 1;
+
+    // soft continuous background wash, quiet
+    const washSrc = makeNoiseSource('pink');
+    const washBP = audioCtx.createBiquadFilter(); washBP.type='bandpass'; washBP.frequency.value=3200; washBP.Q.value=0.4;
+    const washLP = audioCtx.createBiquadFilter(); washLP.type='lowpass'; washLP.frequency.value=6500;
+    const washGain = audioCtx.createGain(); washGain.gain.value = 0.08;
+    washSrc.connect(washBP).connect(washLP).connect(washGain).connect(out);
+
+    // individual droplet bursts, randomly pitched/panned/timed, layered densely
+    const dropBuffer = getNoiseBuffer('white');
+    let stopped = false, timeoutId = null;
+    function drop(){
+      if(stopped) return;
+      const now = audioCtx.currentTime;
+      const dur = 0.02 + Math.random()*0.03;
+      const offset = Math.random() * Math.max(0.01, dropBuffer.duration - dur - 0.02);
+      const src = audioCtx.createBufferSource(); src.buffer = dropBuffer;
+      const bp = audioCtx.createBiquadFilter(); bp.type='bandpass';
+      bp.frequency.value = 2500 + Math.random()*4500;
+      bp.Q.value = 3 + Math.random()*4;
+      const g = audioCtx.createGain();
+      g.gain.setValueAtTime(0, now);
+      g.gain.linearRampToValueAtTime(0.08 + Math.random()*0.05, now+0.003);
+      g.gain.exponentialRampToValueAtTime(0.0008, now+dur);
+      const pan = audioCtx.createStereoPanner(); pan.pan.value = Math.random()*1.8-0.9;
+      src.connect(bp).connect(g).connect(pan).connect(out);
+      src.start(now, offset, dur+0.02);
+      timeoutId = setTimeout(drop, 14 + Math.random()*38);
+    }
+    drop();
+
+    return {
+      output: out,
+      stop(){
+        stopped = true; clearTimeout(timeoutId);
+        try{ washSrc.stop(); }catch(e){}
+        washSrc.disconnect(); washBP.disconnect(); washLP.disconnect(); washGain.disconnect();
+      }
+    };
+  }
+
+  function genOcean(){
+    const out = audioCtx.createGain(); out.gain.value = 1;
+    const src = makeNoiseSource('brown');
+    const lp = audioCtx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=480;
+    const g = audioCtx.createGain(); g.gain.value = 0.32;
+    const lfo = audioCtx.createOscillator(); lfo.frequency.value = 0.12;
+    const lfoGain = audioCtx.createGain(); lfoGain.gain.value = 0.20;
+    lfo.connect(lfoGain).connect(g.gain);
+    lfo.start();
+    src.connect(lp).connect(g).connect(out);
+    return { output: out, stop(){ try{src.stop(); lfo.stop();}catch(e){} src.disconnect(); lfo.disconnect(); lfoGain.disconnect(); lp.disconnect(); g.disconnect(); } };
+  }
+
+  function genForest(){
+    const out = audioCtx.createGain(); out.gain.value = 1;
+    const src = makeNoiseSource('pink');
+    const bp = audioCtx.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=850; bp.Q.value=0.6;
+    const g = audioCtx.createGain(); g.gain.value = 0.13;
+    src.connect(bp).connect(g).connect(out);
+    let stopped = false, timeoutId = null;
+    function chirp(){
+      if(stopped) return;
+      const now = audioCtx.currentTime;
+      const startFreq = 1800 + Math.random()*1300;
+      const osc = audioCtx.createOscillator(); osc.type='sine';
+      const cg = audioCtx.createGain(); cg.gain.setValueAtTime(0, now);
+      cg.gain.linearRampToValueAtTime(0.11, now+0.02);
+      cg.gain.exponentialRampToValueAtTime(0.001, now+0.2);
+      const pan = audioCtx.createStereoPanner(); pan.pan.value = Math.random()*1.6-0.8;
+      osc.frequency.setValueAtTime(startFreq, now);
+      osc.frequency.exponentialRampToValueAtTime(startFreq*1.3, now+0.16);
+      osc.connect(cg).connect(pan).connect(out);
+      osc.start(now); osc.stop(now+0.22);
+      timeoutId = setTimeout(chirp, 3000 + Math.random()*6000);
+    }
+    timeoutId = setTimeout(chirp, 1200);
+    return { output: out, stop(){ stopped=true; clearTimeout(timeoutId); try{src.stop();}catch(e){} src.disconnect(); bp.disconnect(); g.disconnect(); } };
+  }
+
+  function genAmbient(){
+    const out = audioCtx.createGain(); out.gain.value = 1;
+    const notes = [130.81,155.56,174.61,196.00,233.08,261.63,311.13,349.23,392.00,466.16];
+    const delay = audioCtx.createDelay(2.0); delay.delayTime.value = 0.45;
+    const feedback = audioCtx.createGain(); feedback.gain.value = 0.35;
+    const delayFilter = audioCtx.createBiquadFilter(); delayFilter.type='lowpass'; delayFilter.frequency.value=2200;
+    delay.connect(delayFilter).connect(feedback).connect(delay);
+    const wetGain = audioCtx.createGain(); wetGain.gain.value = 0.5;
+    delay.connect(wetGain).connect(out);
+    const dryBus = audioCtx.createGain(); dryBus.gain.value = 0.8;
+    dryBus.connect(out); dryBus.connect(delay);
+    let stopped = false, timeoutId = null;
+    function playNote(){
+      const now = audioCtx.currentTime;
+      const freq = notes[Math.floor(Math.random()*notes.length)];
+      const osc1 = audioCtx.createOscillator(); osc1.type='triangle'; osc1.frequency.value=freq;
+      const osc2 = audioCtx.createOscillator(); osc2.type='sine'; osc2.frequency.value=freq*1.004;
+      const noteGain = audioCtx.createGain(); noteGain.gain.setValueAtTime(0, now);
+      noteGain.gain.linearRampToValueAtTime(0.10, now+3);
+      noteGain.gain.linearRampToValueAtTime(0, now+9);
+      osc1.connect(noteGain); osc2.connect(noteGain); noteGain.connect(dryBus);
+      osc1.start(now); osc2.start(now);
+      osc1.stop(now+9.3); osc2.stop(now+9.3);
+    }
+    function schedule(){
+      if(stopped) return;
+      playNote();
+      timeoutId = setTimeout(schedule, 4000 + Math.random()*3000);
+    }
+    schedule();
+    return { output: out, stop(){ stopped=true; clearTimeout(timeoutId); delay.disconnect(); feedback.disconnect(); delayFilter.disconnect(); wetGain.disconnect(); dryBus.disconnect(); } };
+  }
+
+  function genBinaural(hz){
+    const out = audioCtx.createGain(); out.gain.value = 1;
+    const carrier = 200;
+    const leftOsc = audioCtx.createOscillator(); leftOsc.type='sine'; leftOsc.frequency.value = carrier;
+    const rightOsc = audioCtx.createOscillator(); rightOsc.type='sine'; rightOsc.frequency.value = carrier+hz;
+    const leftPan = audioCtx.createStereoPanner(); leftPan.pan.value = -1;
+    const rightPan = audioCtx.createStereoPanner(); rightPan.pan.value = 1;
+    const gL = audioCtx.createGain(); gL.gain.value = 0.14;
+    const gR = audioCtx.createGain(); gR.gain.value = 0.14;
+    leftOsc.connect(gL).connect(leftPan).connect(out);
+    rightOsc.connect(gR).connect(rightPan).connect(out);
+    leftOsc.start(); rightOsc.start();
+    return {
+      output: out,
+      setHz(newHz){ rightOsc.frequency.setTargetAtTime(carrier+newHz, audioCtx.currentTime, 0.6); },
+      stop(){ try{leftOsc.stop(); rightOsc.stop();}catch(e){} leftOsc.disconnect(); rightOsc.disconnect(); gL.disconnect(); gR.disconnect(); leftPan.disconnect(); rightPan.disconnect(); }
+    };
+  }
+
+  function genCat(){
+    const out = audioCtx.createGain(); out.gain.value = 1;
+
+    const noiseSrc = makeNoiseSource('brown');
+    const lp = audioCtx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=320;
+    const purrGain = audioCtx.createGain(); purrGain.gain.value = 0.20;
+    noiseSrc.connect(lp).connect(purrGain).connect(out);
+
+    const rumble = audioCtx.createOscillator(); rumble.type='sine'; rumble.frequency.value=27;
+    const rumbleGain = audioCtx.createGain(); rumbleGain.gain.value = 0.10;
+    rumble.connect(rumbleGain).connect(out);
+    rumble.start();
+
+    // ~25Hz pulse rate matches the real 20-30Hz range of a cat's purr
+    const purrLFO = audioCtx.createOscillator(); purrLFO.type='sine'; purrLFO.frequency.value=25;
+    const purrLFOGain = audioCtx.createGain(); purrLFOGain.gain.value = 0.13;
+    purrLFO.connect(purrLFOGain);
+    purrLFOGain.connect(purrGain.gain);
+    purrLFOGain.connect(rumbleGain.gain);
+    purrLFO.start();
+
+    // slow swell so it doesn't sound perfectly robotic, like breathing while purring
+    const breathLFO = audioCtx.createOscillator(); breathLFO.type='sine'; breathLFO.frequency.value=0.25;
+    const breathLFOGain = audioCtx.createGain(); breathLFOGain.gain.value = 0.07;
+    breathLFO.connect(breathLFOGain);
+    breathLFOGain.connect(purrGain.gain);
+    breathLFOGain.connect(rumbleGain.gain);
+    breathLFO.start();
+
+    return {
+      output: out,
+      stop(){
+        try{ noiseSrc.stop(); rumble.stop(); purrLFO.stop(); breathLFO.stop(); }catch(e){}
+        noiseSrc.disconnect(); lp.disconnect(); purrGain.disconnect();
+        rumble.disconnect(); rumbleGain.disconnect();
+        purrLFO.disconnect(); purrLFOGain.disconnect();
+        breathLFO.disconnect(); breathLFOGain.disconnect();
+      }
+    };
+  }
+
+  const GENERATORS = {
+    rain: () => genRain(),
+    ocean: () => genOcean(),
+    forest: () => genForest(),
+    cat: () => genCat(),
+    ambient: () => genAmbient(),
+    white: () => genNoise('white', 0.26),
+    pink: () => genNoise('pink', 0.85),
+    brown: () => genNoise('brown', 0.42),
+    binaural: () => genBinaural(binauralHz),
+  };
+
+  function setActiveTile(key){
+    grid.querySelectorAll('.sound-tile').forEach(t => t.classList.toggle('active', t.dataset.key === key));
+    binauralPanel.classList.toggle('show', key === 'binaural');
+  }
+
+  function stopCurrent(){
+    if(!currentGen) return;
+    const gen = currentGen;
+    const now = audioCtx.currentTime;
+    gen.output.gain.cancelScheduledValues(now);
+    gen.output.gain.setValueAtTime(gen.output.gain.value, now);
+    gen.output.gain.linearRampToValueAtTime(0, now+0.4);
+    setTimeout(() => { gen.stop(); gen.output.disconnect(); }, 450);
+    currentGen = null; currentKey = null;
+  }
+
+  function playKey(key){
+    ensureCtx();
+    if(currentKey === key){
+      stopCurrent();
+      setActiveTile(null);
+      return;
+    }
+    stopCurrent();
+    const gen = GENERATORS[key]();
+    gen.output.gain.setValueAtTime(0, audioCtx.currentTime);
+    gen.output.gain.linearRampToValueAtTime(1, audioCtx.currentTime + 0.6);
+    gen.output.connect(masterGain);
+    currentGen = gen; currentKey = key;
+    setActiveTile(key);
+  }
+
+  grid.addEventListener('click', (e) => {
+    const tile = e.target.closest('.sound-tile');
+    if(!tile) return;
+    playKey(tile.dataset.key);
+  });
+
+  binauralPresets.addEventListener('click', (e) => {
+    const btn = e.target.closest('.binaural-preset-btn');
+    if(!btn) return;
+    binauralPresets.querySelectorAll('.binaural-preset-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    binauralHz = parseFloat(btn.dataset.hz);
+    if(currentKey === 'binaural' && currentGen && currentGen.setHz) currentGen.setHz(binauralHz);
+  });
+
+  stopBtn.addEventListener('click', () => {
+    stopCurrent();
+    setActiveTile(null);
+  });
+})();
+
+/* ================= SETUP: THEME ================= */
+(function(){
+  const THEME_KEY = 'groundwork_theme';
+  const grid = document.getElementById('themeGrid');
+  if(!grid) return;
+
+  function getSavedTheme(){
+    try{ return localStorage.getItem(THEME_KEY) || 'soil'; }
+    catch(e){ return 'soil'; }
+  }
+
+  function applyTheme(theme){
+    if(theme === 'soil'){
+      document.documentElement.removeAttribute('data-theme');
+    } else {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+    grid.querySelectorAll('.theme-swatch').forEach(sw => {
+      sw.classList.toggle('active', sw.dataset.theme === theme);
+    });
+    try{ localStorage.setItem(THEME_KEY, theme); }catch(e){}
+  }
+
+  grid.addEventListener('click', (e) => {
+    const sw = e.target.closest('.theme-swatch');
+    if(!sw) return;
+    applyTheme(sw.dataset.theme);
+  });
+
+  applyTheme(getSavedTheme());
+})();
+
+/* ================= QUOTES ================= */
+const QUOTES = [{"text": "Alone we can do so little; together we can do so much.", "author": "Helen Keller"}, {"text": "The best and most beautiful things in the world cannot be seen or even touched — they must be felt with the heart.", "author": "Helen Keller"}, {"text": "Although the world is full of suffering, it is also full of the overcoming of it.", "author": "Helen Keller"}, {"text": "Optimism is the faith that leads to achievement. Nothing can be done without hope and confidence.", "author": "Helen Keller"}, {"text": "The world is moved along not only by the mighty shoves of its heroes, but also by the aggregate of tiny pushes of each honest worker.", "author": "Helen Keller"}, {"text": "What lies behind us and what lies before us are tiny matters compared to what lies within us.", "author": "Ralph Waldo Emerson"}, {"text": "For every minute you remain angry, you give up sixty seconds of peace of mind.", "author": "Ralph Waldo Emerson"}, {"text": "To laugh often and love much, to know even one life has breathed easier because you have lived — this is to have succeeded.", "author": "Ralph Waldo Emerson"}, {"text": "Nothing great was ever achieved without enthusiasm.", "author": "Ralph Waldo Emerson"}, {"text": "Kind words can be short and easy to speak, but their echoes are truly endless.", "author": "Mother Teresa"}, {"text": "I alone cannot change the world, but I can cast a stone across the water to create many ripples.", "author": "Mother Teresa"}, {"text": "My humanity is bound up in yours, for we can only be human together.", "author": "Desmond Tutu"}, {"text": "Hope is being able to see that there is light despite all of the darkness.", "author": "Desmond Tutu"}, {"text": "A person is a person through other persons.", "author": "Desmond Tutu"}, {"text": "I've learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel.", "author": "Maya Angelou"}, {"text": "Try to be a rainbow in someone's cloud.", "author": "Maya Angelou"}, {"text": "Friendship is born at that moment when one person says to another, ‘What! You too? I thought I was the only one.’", "author": "C.S. Lewis"}, {"text": "Kindness is a language which the deaf can hear and the blind can see.", "author": "Mark Twain"}, {"text": "Keep away from those who try to belittle your ambitions.", "author": "Mark Twain"}, {"text": "The best way to cheer yourself up is to try to cheer somebody else up.", "author": "Mark Twain"}, {"text": "We make a living by what we get, but we make a life by what we give.", "author": "Winston Churchill"}, {"text": "Success is not final, failure is not fatal: it is the courage to continue that counts.", "author": "Winston Churchill"}, {"text": "The pessimist sees difficulty in every opportunity. The optimist sees opportunity in every difficulty.", "author": "Winston Churchill"}, {"text": "Attitude is a little thing that makes a big difference.", "author": "Winston Churchill"}, {"text": "No one has ever become poor by giving.", "author": "Anne Frank"}, {"text": "How wonderful it is that nobody need wait a single moment before starting to improve the world.", "author": "Anne Frank"}, {"text": "Think of all the beauty still left around you and be happy.", "author": "Anne Frank"}, {"text": "Whoever is happy will make others happy too.", "author": "Anne Frank"}, {"text": "Darkness cannot drive out darkness; only light can do that. Hate cannot drive out hate; only love can do that.", "author": "Martin Luther King Jr."}, {"text": "We must accept finite disappointment, but never lose infinite hope.", "author": "Martin Luther King Jr."}, {"text": "In the end, we will remember not the words of our enemies, but the silence of our friends.", "author": "Martin Luther King Jr."}, {"text": "Look for the helpers. You will always find people who are helping.", "author": "Fred Rogers"}, {"text": "There isn't anyone you couldn't love once you've heard their story.", "author": "Fred Rogers"}, {"text": "The greatest gift you ever give is your honest self.", "author": "Fred Rogers"}, {"text": "In everyone's life, at some time, our inner fire goes out. It is then burst into flame by an encounter with another human being.", "author": "Albert Schweitzer"}, {"text": "Constant kindness can accomplish much. As the sun makes ice melt, kindness causes misunderstanding, mistrust, and hostility to evaporate.", "author": "Albert Schweitzer"}, {"text": "We are what we repeatedly do. Excellence, then, is not an act, but a habit.", "author": "Aristotle"}, {"text": "No act of kindness, no matter how small, is ever wasted.", "author": "Aesop"}, {"text": "Too often we underestimate the power of a touch, a smile, a kind word, a listening ear, or the smallest act of caring, all of which have the potential to turn a life around.", "author": "Leo Buscaglia"}, {"text": "Encouragement is oxygen to the soul.", "author": "William Arthur Ward"}, {"text": "A warm smile is the universal language of kindness.", "author": "William Arthur Ward"}, {"text": "Feeling gratitude and not expressing it is like wrapping a present and not giving it.", "author": "William Arthur Ward"}, {"text": "Act as if what you do makes a difference. It does.", "author": "William James"}, {"text": "No matter how slowly you go, as long as you do not stop.", "author": "Confucius"}, {"text": "The gem cannot be polished without friction, nor man perfected without trials.", "author": "Confucius"}, {"text": "If you want to lift yourself up, lift up someone else.", "author": "Booker T. Washington"}, {"text": "Success is to be measured not so much by the position that one has reached in life as by the obstacles which he has overcome.", "author": "Booker T. Washington"}, {"text": "You can have everything in life you want if you will just help enough other people get what they want.", "author": "Zig Ziglar"}, {"text": "People often say that motivation doesn't last. Well, neither does bathing — that's why we recommend it daily.", "author": "Zig Ziglar"}, {"text": "We're all just walking each other home.", "author": "Ram Dass"}, {"text": "As you grow older, you will discover that you have two hands: one for helping yourself, the other for helping others.", "author": "Audrey Hepburn"}, {"text": "Remember that not getting what you want is sometimes a wonderful stroke of luck.", "author": "Dalai Lama"}, {"text": "If you think you are too small to make a difference, try sleeping with a mosquito.", "author": "Dalai Lama"}, {"text": "Love and compassion are necessities, not luxuries. Without them, humanity cannot survive.", "author": "Dalai Lama"}, {"text": "It always seems impossible until it's done.", "author": "Nelson Mandela"}, {"text": "No one is born hating another person because of the color of his skin or his background or his religion.", "author": "Nelson Mandela"}, {"text": "The greatest glory in living lies not in never falling, but in rising every time we fall.", "author": "Nelson Mandela"}, {"text": "Change your thoughts and you change your world.", "author": "Norman Vincent Peale"}, {"text": "Go confidently in the direction of your dreams. Live the life you have imagined.", "author": "Henry David Thoreau"}, {"text": "Coming together is a beginning; keeping together is progress; working together is success.", "author": "Henry Ford"}, {"text": "Great things are done by a series of small things brought together.", "author": "Vincent van Gogh"}, {"text": "Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.", "author": "Rumi"}, {"text": "The wound is the place where the light enters you.", "author": "Rumi"}, {"text": "Raise your words, not your voice. It is rain that grows flowers, not thunder.", "author": "Rumi"}, {"text": "Hope is the thing with feathers that perches in the soul.", "author": "Emily Dickinson"}, {"text": "A single conversation with a wise man is better than ten years of study.", "author": "Chinese Proverb"}, {"text": "Better to light a candle than curse the darkness.", "author": "Chinese Proverb"}, {"text": "If you want to go fast, go alone. If you want to go far, go together.", "author": "African Proverb"}, {"text": "Shared joy is a double joy; shared sorrow is half a sorrow.", "author": "Swedish Proverb"}, {"text": "Fall seven times, stand up eight.", "author": "Japanese Proverb"}, {"text": "You're braver than you believe, stronger than you seem, and smarter than you think.", "author": "A. A. Milne"}, {"text": "Piglet noticed that even though he had a Very Small Heart, it could hold a rather large amount of Gratitude.", "author": "A. A. Milne"}, {"text": "Encourage yourself. Nobody else understands what you're going through the way you do.", "author": "Roy T. Bennett"}, {"text": "Somewhere inside all of us is the power to change the world.", "author": "Roald Dahl"}, {"text": "No one is useless in this world who lightens the burdens of another.", "author": "Charles Dickens"}, {"text": "The sun himself is weak when he first rises, and gathers strength and courage as the day gets on.", "author": "Charles Dickens"}, {"text": "I am not afraid of storms, for I am learning how to sail my ship.", "author": "Louisa May Alcott"}, {"text": "Because you are alive, everything is possible.", "author": "Thich Nhat Hanh"}, {"text": "Compassion is a verb.", "author": "Thich Nhat Hanh"}, {"text": "You are the sky. Everything else is just the weather.", "author": "Pema Chödrön"}, {"text": "Connection is why we're here; it is what gives purpose and meaning to our lives.", "author": "Brené Brown"}, {"text": "In order for connection to happen, we have to allow ourselves to be seen.", "author": "Brené Brown"}, {"text": "People don't care how much you know until they know how much you care.", "author": "Theodore Roosevelt"}, {"text": "Comparison is the thief of joy.", "author": "Theodore Roosevelt"}, {"text": "Waste no more time arguing about what a good man should be. Be one.", "author": "Marcus Aurelius"}, {"text": "The happiness of your life depends upon the quality of your thoughts.", "author": "Marcus Aurelius"}, {"text": "Every new beginning comes from some other beginning's end.", "author": "Seneca"}, {"text": "It's not what happens to you, but how you react to it that matters.", "author": "Epictetus"}, {"text": "When we are no longer able to change a situation, we are challenged to change ourselves.", "author": "Viktor Frankl"}, {"text": "Those who have a ‘why’ to live, can bear with almost any ‘how’.", "author": "Viktor Frankl"}, {"text": "Optimism is a happiness magnet. If you stay positive, good things and good people will be drawn to you.", "author": "Mary Lou Retton"}, {"text": "A candle loses nothing by lighting another candle.", "author": "James Keller"}, {"text": "We rise by lifting others.", "author": "Robert Ingersoll"}, {"text": "No one can whistle a symphony. It takes a whole orchestra to play it.", "author": "H. E. Luccock"}, {"text": "None of us got to where we are alone.", "author": "Michelle Obama"}, {"text": "The best way to find yourself is to lose yourself in the service of others.", "author": "Mahatma Gandhi"}, {"text": "You must be the change you wish to see in the world.", "author": "Mahatma Gandhi"}, {"text": "Even the darkest night will end and the sun will rise.", "author": "Victor Hugo"}, {"text": "A friend is someone who gives you total freedom to be yourself.", "author": "Jim Morrison"}, {"text": "Every flower must grow through dirt.", "author": "Laurie Jean Sennott"}, {"text": "The sun does not shine for a few trees and flowers, but for the wide world's joy.", "author": "Henry Ward Beecher"}, {"text": "What we have once enjoyed we can never lose; all that we love deeply becomes a part of us.", "author": "Helen Keller"}, {"text": "Be somebody who makes everybody feel like a somebody.", "author": "Kid President"}, {"text": "Do not judge me by my successes, judge me by how many times I fell down and got back up again.", "author": "Nelson Mandela"}, {"text": "The greatest good you can do for another is not just share your riches, but reveal to them their own.", "author": "Benjamin Disraeli"}, {"text": "A little bit of light dispels a lot of darkness.", "author": "Rabbi Menachem Mendel Schneerson"}, {"text": "Together we can do what we could never do alone.", "author": "Habitat for Humanity (motto)"}];
+(function(){
+  const textEl = document.getElementById('quoteText');
+  const authorEl = document.getElementById('quoteAuthor');
+  const shuffleBtn = document.getElementById('quoteShuffle');
+  if(!textEl) return;
+
+  let lastIdx = -1;
+  function showRandom(){
+    let idx;
+    do{ idx = Math.floor(Math.random()*QUOTES.length); } while(QUOTES.length > 1 && idx === lastIdx);
+    lastIdx = idx;
+    textEl.textContent = '\u201C' + QUOTES[idx].text + '\u201D';
+    authorEl.textContent = '\u2014 ' + QUOTES[idx].author;
+  }
+
+  shuffleBtn.addEventListener('click', showRandom);
+  showRandom();
+})();
+
+/* ================= SERVICE WORKER REGISTRATION ================= */
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch((err) => {
+      console.warn('Groundwork: service worker registration failed.', err);
+    });
+  });
+}
+
+/* ================= DISCLAIMER GATE ================= */
+document.addEventListener('DOMContentLoaded', function(){
+  const check = document.getElementById('gateCheck');
+  const continueBtn = document.getElementById('gateContinue');
+  if(!check || !continueBtn) return;
+
+  check.addEventListener('change', () => {
+    if(check.checked){
+      continueBtn.removeAttribute('aria-disabled');
+    } else {
+      continueBtn.setAttribute('aria-disabled', 'true');
+    }
+  });
+
+  continueBtn.addEventListener('click', () => {
+    if(!check.checked) return;
+    try{ localStorage.setItem('groundwork_disclaimer_accepted', 'true'); }catch(e){}
+    document.documentElement.classList.remove('gate-pending');
+  });
+});
+
+/* ================= DATA EXPORT ================= */
+(function(){
+  const exportBtn = document.getElementById('exportBtn');
+  const flash = document.getElementById('exportFlash');
+  if(!exportBtn) return;
+
+  exportBtn.addEventListener('click', () => {
+    const keys = [
+      'groundwork_journal_entries',
+      'groundwork_gratitude_entries',
+      'groundwork_theme',
+      'groundwork_reminder',
+    ];
+    const data = { exportedAt: new Date().toISOString(), app: 'Groundwork' };
+    keys.forEach(k => {
+      try{
+        const raw = localStorage.getItem(k);
+        data[k] = raw ? JSON.parse(raw) : null;
+      } catch(e){ data[k] = null; }
+    });
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const dateStr = new Date().toISOString().slice(0,10);
+    a.href = url;
+    a.download = 'groundwork-export-' + dateStr + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+
+    flash.classList.add('show');
+    setTimeout(() => flash.classList.remove('show'), 2200);
+  });
+})();
+
+/* ================= HOME ================= */
+(function(){
+  const greetingEl = document.getElementById('homeGreeting');
+  const dateEl = document.getElementById('homeDate');
+  const moodRow = document.getElementById('moodRow');
+  const moodMsg = document.getElementById('moodMsg');
+  const journalStreakEl = document.getElementById('journalStreak');
+  const gratitudeStreakEl = document.getElementById('gratitudeStreak');
+  const promptPreviewEl = document.getElementById('homePromptPreview');
+  if(!greetingEl) return;
+
+  const MOOD_KEY = 'groundwork_mood_entries';
+
+  function todayKey(d){
+    const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), day = String(d.getDate()).padStart(2,'0');
+    return y+'-'+m+'-'+day;
+  }
+
+  function dayOfYear(d){
+    const start = new Date(d.getFullYear(), 0, 0);
+    return Math.floor((d - start) / 86400000);
+  }
+
+  function loadJSON(key, fallback){
+    try{
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch(e){ return fallback; }
+  }
+
+  function saveJSON(key, value){
+    try{ localStorage.setItem(key, JSON.stringify(value)); }catch(e){}
+  }
+
+  function calcStreakFromDateSet(dateSet, today){
+    let cursor = new Date(today);
+    if(!dateSet.has(todayKey(cursor))){
+      cursor.setDate(cursor.getDate()-1);
+    }
+    let streak = 0;
+    while(dateSet.has(todayKey(cursor))){
+      streak++;
+      cursor.setDate(cursor.getDate()-1);
+    }
+    return streak;
+  }
+
+  function renderGreeting(){
+    const now = new Date();
+    const hour = now.getHours();
+    const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+    greetingEl.textContent = greeting;
+    dateEl.textContent = now.toLocaleDateString(undefined, { weekday:'long', month:'long', day:'numeric' });
+  }
+
+  function renderMood(){
+    const moods = loadJSON(MOOD_KEY, {});
+    const today = todayKey(new Date());
+    const logged = moods[today];
+    moodRow.querySelectorAll('.mood-btn').forEach(btn => {
+      btn.classList.toggle('selected', logged && parseInt(btn.dataset.mood,10) === logged);
+    });
+    moodMsg.style.display = logged ? 'block' : 'none';
+  }
+
+  moodRow.addEventListener('click', (e) => {
+    const btn = e.target.closest('.mood-btn');
+    if(!btn) return;
+    const moods = loadJSON(MOOD_KEY, {});
+    const today = todayKey(new Date());
+    moods[today] = parseInt(btn.dataset.mood, 10);
+    saveJSON(MOOD_KEY, moods);
+    renderMood();
+  });
+
+  function renderStreaks(){
+    const today = new Date();
+
+    const journalEntries = loadJSON('groundwork_journal_entries', []);
+    const journalDates = new Set(
+      (journalEntries || []).map(e => (e.time || '').slice(0,10)).filter(Boolean)
+    );
+    journalStreakEl.textContent = calcStreakFromDateSet(journalDates, today);
+
+    const gratEntries = loadJSON('groundwork_gratitude_entries', {});
+    const gratDates = new Set(
+      Object.keys(gratEntries || {}).filter(k => (gratEntries[k]||[]).some(t => t && t.trim()))
+    );
+    gratitudeStreakEl.textContent = calcStreakFromDateSet(gratDates, today);
+  }
+
+  function renderPromptPreview(){
+    if(typeof PROMPTS === 'undefined') return;
+    const idx = (dayOfYear(new Date()) - 1) % PROMPTS.length;
+    const text = PROMPTS[idx];
+    promptPreviewEl.textContent = text.length > 70 ? text.slice(0,68)+'\u2026' : text;
+  }
+
+  document.querySelectorAll('.home-quicklink[data-goto]').forEach(btn => {
+    btn.addEventListener('click', () => goToView(btn.dataset.goto));
+  });
+
+  function refreshHome(){
+    renderGreeting();
+    renderMood();
+    renderStreaks();
+    renderPromptPreview();
+  }
+
+  window.__viewRefreshers.home = refreshHome;
+  refreshHome();
+})();
+
+/* ================= REMINDER ================= */
+(function(){
+  const timeInput = document.getElementById('reminderTime');
+  const toggleBtn = document.getElementById('reminderToggle');
+  const flash = document.getElementById('reminderFlash');
+  if(!timeInput) return;
+
+  const KEY = 'groundwork_reminder';
+
+  function load(){
+    try{
+      const raw = localStorage.getItem(KEY);
+      return raw ? JSON.parse(raw) : { enabled:false, time:'09:00', lastFired:null };
+    } catch(e){ return { enabled:false, time:'09:00', lastFired:null }; }
+  }
+  function save(state){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+
+  let state = load();
+  timeInput.value = state.time || '09:00';
+  updateButton();
+
+  function updateButton(){
+    toggleBtn.textContent = state.enabled ? 'Disable Daily Reminder' : 'Enable Daily Reminder';
+  }
+
+  function flashMsg(text){
+    flash.textContent = text;
+    flash.classList.add('show');
+    setTimeout(() => flash.classList.remove('show'), 2200);
+  }
+
+  timeInput.addEventListener('change', () => {
+    state.time = timeInput.value;
+    save(state);
+    if(state.enabled) flashMsg('Reminder time updated');
+  });
+
+  toggleBtn.addEventListener('click', () => {
+    if(state.enabled){
+      state.enabled = false;
+      save(state);
+      updateButton();
+      flashMsg('Reminder turned off');
+      return;
+    }
+    if(!('Notification' in window)){
+      flashMsg('Notifications aren\u2019t supported in this browser');
+      return;
+    }
+    Notification.requestPermission().then((perm) => {
+      if(perm === 'granted'){
+        state.enabled = true;
+        state.time = timeInput.value;
+        save(state);
+        updateButton();
+        flashMsg('Daily reminder enabled');
+      } else {
+        flashMsg('Notification permission was denied');
+      }
+    });
+  });
+
+  // Checks once a minute while the app is open; fires at most once per day.
+  setInterval(() => {
+    if(!state.enabled) return;
+    if(!('Notification' in window) || Notification.permission !== 'granted') return;
+    const now = new Date();
+    const hh = String(now.getHours()).padStart(2,'0');
+    const mm = String(now.getMinutes()).padStart(2,'0');
+    const nowStr = hh+':'+mm;
+    const todayStr = now.toISOString().slice(0,10);
+    if(nowStr === state.time && state.lastFired !== todayStr){
+      try{
+        new Notification('Groundwork', {
+          body: 'A gentle nudge to check in with yourself today.',
+          icon: 'icon-192.png'
+        });
+      } catch(e){}
+      state.lastFired = todayStr;
+      save(state);
+    }
+  }, 20000);
+})();
+</script>
+
+<div class="gate-overlay" id="gateOverlay">
+  <svg class="gate-mark" viewBox="0 0 40 40" fill="none">
+    <circle cx="20" cy="20" r="19" stroke="var(--soil-mid)" stroke-width="1.4" opacity="0.4"/>
+    <path d="M4 24c4-3 8 3 12 0s8-3 12 0 8 3 8 3" stroke="var(--moss-deep)" stroke-width="1.6" fill="none" opacity="0.85"/>
+    <path d="M4 30c4-3 8 3 12 0s8-3 12 0 8 3 8 3" stroke="var(--moss-deep)" stroke-width="1.6" fill="none"/>
+    <circle cx="20" cy="13" r="3.2" fill="var(--clay-deep)"/>
+  </svg>
+  <div class="gate-title">Before you begin</div>
+  <div class="gate-sub">Groundwork · please read this once</div>
+  <div class="gate-text">
+    <strong>Groundwork is not a medical device</strong> and does not provide medical advice, diagnosis, or treatment. Its exercises, prompts, and other content are offered for general self-care and informational purposes only, and are not a substitute for care from a licensed physician, therapist, or other qualified healthcare provider.<br><br>
+    <strong>If you are experiencing a medical emergency, call 911</strong> or go to your nearest emergency room. If you are in crisis or having thoughts of suicide, call or text <strong>988</strong> to reach the Suicide &amp; Crisis Lifeline, available 24/7.<br><br>
+    Journal entries and gratitude lists are stored only on this device and are not sent anywhere. You can review this disclaimer, the privacy policy, and terms of service anytime from the Setup tab.
+  </div>
+  <div class="gate-check-row">
+    <input type="checkbox" id="gateCheck">
+    <label for="gateCheck">I understand Groundwork is a self-care tool, not medical care, and I know how to reach 911 or 988 in an emergency.</label>
+  </div>
+  <div class="gate-actions">
+    <button class="btn moss gate-btn" id="gateContinue" aria-disabled="true">Continue</button>
+  </div>
+</div>
+
+</body>
+</html>
