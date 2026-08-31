@@ -80,6 +80,7 @@
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
   body{
     background:var(--paper);
     color:var(--soil-dark);
@@ -177,6 +178,18 @@
   .section-eyebrow::after{
     content:""; flex:1; height:1px; background:var(--line);
   }
+  .section-eyebrow[id], .card[id]{ scroll-margin-top: calc(var(--fixed-offset, 44px) + 12px); }
+
+  .jump-row{
+    display:flex; gap:8px; overflow-x:auto; padding:2px 2px 12px;
+    -ms-overflow-style:none; scrollbar-width:none;
+  }
+  .jump-row::-webkit-scrollbar{ display:none; }
+  .jump-chip{
+    flex:0 0 auto; padding:7px 14px; border-radius:20px; border:1.5px solid var(--line);
+    background:var(--card-bg); font-size:12.5px; font-weight:600; color:var(--soil-mid);
+    text-decoration:none; white-space:nowrap;
+  }
 
   .card{
     background:var(--card-bg);
@@ -226,17 +239,24 @@
   /* ---------- Box breathing ---------- */
   .breath-wrap{ display:flex; flex-direction:column; align-items:center; padding:10px 0 4px; }
   .breath-ring{
-    width:168px;height:168px;border-radius:50%;
+    width:168px;height:168px;border-radius:26px;
     background:radial-gradient(circle at 35% 30%, #cfe0e9, var(--sky));
     display:flex; align-items:center; justify-content:center;
+    position:relative;
     transform:scale(0.62);
     transition:transform 4s cubic-bezier(.45,0,.55,1);
     box-shadow:0 8px 24px rgba(111,143,166,0.35);
   }
   .breath-core{
-    width:70%; height:70%; border-radius:50%;
+    width:70%; height:70%; border-radius:16px;
     background:rgba(255,255,255,0.35);
     display:flex; flex-direction:column; align-items:center; justify-content:center;
+  }
+  .breath-indicator{
+    position:absolute; top:0; left:0; width:16px; height:16px; margin:-8px 0 0 -8px;
+    border-radius:50%; background:#fff; border:2.5px solid var(--sky-deep);
+    box-shadow:0 2px 6px rgba(43,33,24,0.3);
+    transition:left 4s linear, top 4s linear;
   }
   .breath-phase{ font-family:'Fraunces',serif; font-weight:600; font-size:17px; color:#1d3a49; }
   .breath-count{ font-family:'IBM Plex Mono',monospace; font-size:13px; color:#2c4c5c; margin-top:2px; }
@@ -431,65 +451,7 @@
   .grat-history-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:5px; }
   .grat-history-list li{ font-size:13.5px; display:flex; gap:8px; }
   .grat-history-list li::before{ content:"·"; color:var(--amber-deep); font-weight:700; }
-// --- Affirmations dropdown ---
-var AFFIRMATIONS = [
-  "I accept myself as I am.",
-  "I am a capable person.",
-  "I am a good and caring person.",
-  "I am doing the best that I can.",
-  "I am good enough.",
-  "I am valuable because I am human, alive and unique.",
-  "I can be anxious and still deal with this situation.",
-  "I can do my coping strategies and allow this to pass.",
-  "I can handle my feelings and sensations.",
-  "I can handle these symptoms or sensations.",
-  "I can make a difference in the world.",
-  "I can relax and let go of tension.",
-  "I can take all the time I need in order to let go and relax.",
-  "I deserve to feel O.K. right now.",
-  "I don't need these thoughts — I can choose to think differently.",
-  "I have confidence in myself.",
-  "I've survived this before and I'll survive this time, too.",
-  "There's no need to push myself. I can take as small a step forward as I choose.",
-  "These are just thoughts — not reality.",
-  "This anxiety won't hurt me — even if it doesn't feel good.",
-  "This feeling isn't comfortable or pleasant, but I can accept it.",
-  "This is an opportunity for me to learn to cope with my fears.",
-  "This isn't an emergency. It's O.K. to think slowly about what I need to do.",
-  "This isn't the worst thing that could happen."
-];
 
-var affirmSelect = el("select", {
-  style: { width: "100%", background: t.bgSoft, color: t.text, border: "1px solid " + t.border, borderRadius: "10px", padding: "10px", fontSize: "14px", boxSizing: "border-box" }
-});
-affirmSelect.appendChild(el("option", { value: "" }, ["Choose an affirmation..."]));
-AFFIRMATIONS.forEach(function(a, i) {
-  affirmSelect.appendChild(el("option", { value: String(i) }, [a]));
-});
-
-var affirmDisplay = el("div", {
-  style: { marginTop: "12px", fontFamily: t.display, fontSize: "15px", fontWeight: "700", color: t.text, textAlign: "center", minHeight: "44px", display: "flex", alignItems: "center", justifyContent: "center", lineHeight: "1.4" }
-}, ["Tap the dropdown or shuffle for one"]);
-
-affirmSelect.addEventListener("change", function() {
-  affirmDisplay.textContent = affirmSelect.value === "" ? "Tap the dropdown or shuffle for one" : AFFIRMATIONS[affirmSelect.value];
-});
-
-var randomAffirmBtn = el("button", {
-  onclick: function() {
-    var i = Math.floor(Math.random() * AFFIRMATIONS.length);
-    affirmSelect.value = String(i);
-    affirmDisplay.textContent = AFFIRMATIONS[i];
-  },
-  style: { marginTop: "10px", width: "100%", background: t.cardAlt, color: t.text, border: "1px solid " + t.border, borderRadius: "10px", padding: "10px 14px", fontSize: "13px", fontWeight: "700", cursor: "pointer" }
-}, ["\uD83C\uDFB2  Shuffle Affirmation"]);
-
-wrap.appendChild(card(t, [
-  sectionLabel(t, "Affirmation"),
-  affirmSelect,
-  affirmDisplay,
-  randomAffirmBtn
-], { marginBottom: "20px", background: t.cardAlt }));
   /* ---------- Quiet Games ---------- */
   .bubble-grid{
     display:grid; grid-template-columns:repeat(7, 1fr); gap:7px;
@@ -953,13 +915,21 @@ wrap.appendChild(card(t, [
 
 <div class="view" id="view-calm">
   <div class="section-eyebrow">Calm</div>
+  <div class="jump-row">
+    <a class="jump-chip" href="#calmBreathe">Breathe</a>
+    <a class="jump-chip" href="#calmGround">Ground</a>
+    <a class="jump-chip" href="#calmWave">Ride the wave</a>
+    <a class="jump-chip" href="#calmGames">Games</a>
+    <a class="jump-chip" href="#calmSounds">Sounds</a>
+  </div>
 
   <!-- BOX BREATHING -->
-  <div class="card">
+  <div class="card" id="calmBreathe">
     <h3><span class="dot sky"></span>Box Breathing</h3>
     <p class="sub">Four seconds in, four seconds held, four seconds out, four seconds held. Slows the nervous system down.</p>
     <div class="breath-wrap">
       <div class="breath-ring" id="breathRing">
+        <div class="breath-indicator" id="breathIndicator"></div>
         <div class="breath-core">
           <div class="breath-phase" id="breathPhase">Ready</div>
           <div class="breath-count" id="breathCount">&nbsp;</div>
@@ -977,7 +947,7 @@ wrap.appendChild(card(t, [
   </div>
 
   <!-- GROUNDING 5-4-3-2-1 -->
-  <div class="card">
+  <div class="card" id="calmGround">
     <h3><span class="dot moss"></span>Grounding · 5-4-3-2-1</h3>
     <p class="sub">Work through your senses to land back in the room you're in.</p>
     <div id="groundSteps"></div>
@@ -987,7 +957,7 @@ wrap.appendChild(card(t, [
   </div>
 
   <!-- URGE / WAVE SURFING -->
-  <div class="card">
+  <div class="card" id="calmWave">
     <h3><span class="dot clay"></span>Riding the Wave</h3>
     <p class="sub">Urges rise, peak, and pass on their own &mdash; usually within a few minutes. You don't have to act on it, just ride it out.</p>
     <div class="wave-presets">
@@ -1004,10 +974,7 @@ wrap.appendChild(card(t, [
     </div>
   </div>
 
-  <div class="section-eyebrow">Coping skills</div>
-  <div id="accordion"></div>
-
-  <div class="section-eyebrow">Quiet games</div>
+  <div class="section-eyebrow" id="calmGames">Quiet games</div>
   <div class="segmented" id="gameSeg">
     <button class="seg-btn active" data-game="bubbles">Bubbles</button>
     <button class="seg-btn" data-game="sand">Sand Garden</button>
@@ -1076,7 +1043,7 @@ wrap.appendChild(card(t, [
     <button class="btn ghost" id="constellationReset" style="margin-top:10px;">New Constellation</button>
   </div>
 
-  <div class="section-eyebrow">Sounds</div>
+  <div class="section-eyebrow" id="calmSounds">Sounds</div>
   <div class="card">
     <h3><span class="dot sky"></span>Calming Sounds</h3>
     <p class="sub">Nature sounds, slow noise, and a generative ambient pad &mdash; all synthesized, nothing streamed.</p>
@@ -1111,9 +1078,22 @@ wrap.appendChild(card(t, [
 
 </div><!-- /view-calm -->
 
-<div class="view" id="view-control">
-  <div class="section-eyebrow">Control</div>
+<div class="view" id="view-skills">
+  <div class="section-eyebrow">Skills</div>
+  <div class="jump-row">
+    <a class="jump-chip" href="#skillsCoping">Coping skills</a>
+    <a class="jump-chip" href="#skillsControl">What I can control</a>
+    <a class="jump-chip" href="#skillsRightNow">Right now</a>
+  </div>
 
+  <div class="section-eyebrow" id="skillsCoping">Coping skills</div>
+  <div class="card">
+    <h3><span class="dot moss"></span>Pick something to try</h3>
+    <p class="sub">Grouped ideas for physical, mental, social, and creative ways to cope. Tap to check one off.</p>
+  </div>
+  <div id="accordion"></div>
+
+  <div class="section-eyebrow" id="skillsControl">What I can control</div>
   <div class="card">
     <h3><span class="dot moss"></span>50 things I can control</h3>
     <p class="sub">What I need to focus on right now.</p>
@@ -1128,7 +1108,7 @@ wrap.appendChild(card(t, [
     <div id="ctrlList"></div>
   </div>
 
-  <div class="section-eyebrow">Right now</div>
+  <div class="section-eyebrow" id="skillsRightNow">Right now</div>
   <div class="card">
     <h3><span class="dot clay"></span>How much control do I have?</h3>
     <p class="sub">Tap the number that fits this situation.</p>
@@ -1139,7 +1119,7 @@ wrap.appendChild(card(t, [
     </div>
   </div>
 
-</div><!-- /view-control -->
+</div><!-- /view-skills -->
 
 <div class="view" id="view-journal">
   <div class="section-eyebrow">Journal</div>
@@ -1351,9 +1331,9 @@ wrap.appendChild(card(t, [
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12c4-3 8 3 12 0s6-2 6-2M3 17c4-3 8 3 12 0s6-2 6-2"/></svg>
     Calm
   </button>
-  <button class="navbtn" data-view="control">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.3"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg>
-    Control
+  <button class="navbtn" data-view="skills">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.3h6c0-1.1.4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg>
+    Skills
   </button>
   <button class="navbtn" data-view="journal">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
@@ -1377,6 +1357,7 @@ wrap.appendChild(card(t, [
 /* ================= BOX BREATHING ================= */
 (function(){
   const ring = document.getElementById('breathRing');
+  const indicator = document.getElementById('breathIndicator');
   const phaseEl = document.getElementById('breathPhase');
   const countEl = document.getElementById('breathCount');
   const cyclesEl = document.getElementById('breathCycles');
@@ -1384,11 +1365,13 @@ wrap.appendChild(card(t, [
   const startBtn = document.getElementById('breathStart');
   const resetBtn = document.getElementById('breathReset');
 
+  // orbit = corner the indicator travels TO over the course of this phase,
+  // tracing one side of the square per phase (4 sides = 1 full breath cycle).
   const phases = [
-    {name:'Inhale', scale:1, secs:4},
-    {name:'Hold', scale:1, secs:4},
-    {name:'Exhale', scale:0.62, secs:4},
-    {name:'Hold', scale:0.62, secs:4},
+    {name:'Inhale', scale:1, secs:4, orbit:{left:'100%', top:'0%'}},
+    {name:'Hold', scale:1, secs:4, orbit:{left:'100%', top:'100%'}},
+    {name:'Exhale', scale:0.62, secs:4, orbit:{left:'0%', top:'100%'}},
+    {name:'Hold', scale:0.62, secs:4, orbit:{left:'0%', top:'0%'}},
   ];
   let running=false, phaseIdx=0, tickTimer=null, secLeft=4, cycles=0, elapsedSecs=0;
 
@@ -1397,6 +1380,9 @@ wrap.appendChild(card(t, [
     phaseEl.textContent = p.name;
     ring.style.transition = 'transform 4s cubic-bezier(.45,0,.55,1)';
     ring.style.transform = 'scale(' + p.scale + ')';
+    indicator.style.transition = 'left 4s linear, top 4s linear';
+    indicator.style.left = p.orbit.left;
+    indicator.style.top = p.orbit.top;
     secLeft = p.secs;
     countEl.textContent = secLeft;
   }
@@ -1435,6 +1421,9 @@ wrap.appendChild(card(t, [
     phaseEl.textContent='Ready'; countEl.innerHTML='&nbsp;';
     ring.style.transition='transform .4s ease';
     ring.style.transform='scale(0.62)';
+    indicator.style.transition='left .4s ease, top .4s ease';
+    indicator.style.left='0%';
+    indicator.style.top='0%';
   });
 })();
 
@@ -1597,6 +1586,7 @@ wrap.appendChild(card(t, [
   function sizeOffset(){
     if(!bar) return;
     document.body.style.paddingTop = bar.offsetHeight + 'px';
+    document.documentElement.style.setProperty('--fixed-offset', bar.offsetHeight + 'px');
   }
   sizeOffset();
   window.addEventListener('resize', sizeOffset);
@@ -1788,7 +1778,22 @@ function goToView(key){
     fill.style.width = (done / total * 100) + '%';
   }
 
+  const CATEGORY_BREAKS = {
+    0: 'How I Show Up',
+    10: 'Boundaries & Self-Acceptance',
+    20: 'Mindset & Relationships',
+    30: 'Self-Talk & Kindness',
+    40: 'Resilience & Gratitude',
+  };
+
   items.forEach((text, i) => {
+    if(CATEGORY_BREAKS[i]){
+      const heading = document.createElement('div');
+      heading.className = 'section-eyebrow';
+      heading.style.margin = i === 0 ? '2px 2px 10px' : '22px 2px 10px';
+      heading.textContent = CATEGORY_BREAKS[i];
+      list.appendChild(heading);
+    }
     const chip = document.createElement('button');
     chip.className = 'skill-chip' + (checked[i] ? ' checked' : '');
     chip.style.cssText = 'width:100%;border:none;text-align:left;';
