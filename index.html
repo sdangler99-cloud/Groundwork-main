@@ -756,6 +756,11 @@
     display:flex; justify-content:space-between; margin-top:8px;
     font-size:10.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--soil-mid);
   }
+  .scale-quote{
+    font-family:'Fraunces',serif; font-style:italic; font-size:14px; line-height:1.45;
+    color:var(--soil-dark); background:var(--topsoil-2); border-radius:12px; padding:12px 14px;
+    margin-top:12px; display:none;
+  }
   .mood-logged-msg{
     font-family:'Fraunces',serif; font-style:italic; font-size:13px; color:var(--sky-deep);
     margin-top:12px; text-align:center;
@@ -1117,6 +1122,7 @@
       <span>Can control</span>
       <span>Can't control</span>
     </div>
+    <div class="scale-quote" id="scaleQuote"></div>
   </div>
 
 </div><!-- /view-skills -->
@@ -1754,12 +1760,34 @@ function goToView(key){
     "When I take mindful breaths."
   ];
 
+  // Low numbers on the scale = "Can control" (lots of agency) → congratulate.
+  // High numbers = "Can't control" (mostly out of their hands) → comfort/uplift.
+  const CONTROL_QUOTES_AGENCY = [
+    "That's real strength — naming what's yours to hold.",
+    "Nice. Claiming your control here is not nothing.",
+    "You're steering this one. That matters.",
+    "Good — that clarity is worth holding onto.",
+    "You know your part in this. That's the work.",
+    "That's exactly the kind of clarity that moves things forward.",
+    "Recognizing what's yours to carry is half the battle. Well done."
+  ];
+  const CONTROL_QUOTES_UPLIFT = [
+    "It's okay that this one feels out of your hands. You don't have to hold what isn't yours.",
+    "Some things really aren't yours to carry. Let this one rest a little.",
+    "You don't have to fix what you can't control — just breathe through it.",
+    "This won't feel this heavy forever. You're allowed to set it down for now.",
+    "Not everything is yours to solve today. That's not failure — that's true.",
+    "It's okay to feel small next to this. You're still doing your part.",
+    "Letting go of what isn't yours isn't giving up — it's wisdom."
+  ];
+
   const list = document.getElementById('ctrlList');
   if(!list) return;
   const fill = document.getElementById('ctrlFill');
   const countEl = document.getElementById('ctrlCount');
   const resetBtn = document.getElementById('ctrlReset');
   const scaleGrid = document.getElementById('scaleGrid');
+  const scaleQuote = document.getElementById('scaleQuote');
 
   const CHECK_KEY = 'groundwork_control_checklist';
   const SCALE_KEY = 'groundwork_control_scale';
@@ -1815,6 +1843,13 @@ function goToView(key){
     updateProgress();
   });
 
+  function showScaleQuote(n){
+    if(!scaleQuote) return;
+    const pool = n <= 5 ? CONTROL_QUOTES_AGENCY : CONTROL_QUOTES_UPLIFT;
+    scaleQuote.textContent = pool[Math.floor(Math.random() * pool.length)];
+    scaleQuote.style.display = 'block';
+  }
+
   let scaleVal = loadJSON(SCALE_KEY, null);
   for(let n = 1; n <= 10; n++){
     const btn = document.createElement('button');
@@ -1825,9 +1860,11 @@ function goToView(key){
       saveJSON(SCALE_KEY, scaleVal);
       scaleGrid.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
+      showScaleQuote(n);
     });
     scaleGrid.appendChild(btn);
   }
+  if(scaleVal !== null) showScaleQuote(scaleVal);
 })();
 
 /* ================= JOURNAL: 366 PROMPTS ================= */
